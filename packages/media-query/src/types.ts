@@ -1,0 +1,1 @@
+export type AspectRatio = [ widthRatio: number, heightRatio: number ];
