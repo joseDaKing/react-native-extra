@@ -1,0 +1,12 @@
+{
+  "name": "react-native-extra",
+  "displayName": "react-native-extra",
+  "expo": {
+    "name": "react-native-extra",
+    "slug": "react-native-extra",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
