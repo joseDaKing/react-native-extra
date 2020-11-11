@@ -8,59 +8,59 @@ import calculate from "calc-units";
 
 
 
-type Unit = (value: number) => number;
+type Unit = () => number;
 
-const useVh: Unit = value => {
+const useVh: Unit = () => {
 
     const { height } = useWindowDimensions();
 
-    return height / 100 * value;
+    return height / 100;
 };
 
-const useVw: Unit = value => {
+const useVw: Unit = () => {
 
     const { width } = useWindowDimensions();
 
-    return width / 100 * value;
+    return width / 100;
 };
 
-const useVmax: Unit = value => {
+const useVmax: Unit = () => {
 
     const { height, width } = useWindowDimensions();
 
-    return value * Math.max(width, height) / 100;
+    return Math.max(width, height) / 100;
 };
 
-const useVmin: Unit = value => {
+const useVmin: Unit = () => {
 
     const { height, width } = useWindowDimensions();
 
-    return value * Math.min(width, height) / 100;
+    return Math.min(width, height) / 100;
 };
 
-const useMm: Unit = value => {
+const useMm: Unit = () => {
 
-    return value * 3.78;
+    return 3.78;
 };
 
-const useCm: Unit = value => {
+const useCm: Unit = () => {
 
-    return value * 37.8;
+    return 37.8;
 };
 
-const useIn: Unit = value => {
+const useIn: Unit = () => {
 
-    return value * 96;
+    return 96;
 };
 
-const usePt: Unit = value => {
+const usePt: Unit = () => {
 
-    return value * 1.33;
+    return 1.33;
 };
 
-const usePc: Unit = value => {
+const usePc: Unit = () => {
 
-    return usePt(12) * value;
+    return 1.33 * 12
 };
 
 
@@ -80,11 +80,11 @@ export const RemProvider: React.FC<RemProviderProps> = ({ children, value }) => 
     );
 };
 
-const useRem: Unit = value => {
+const useRem: Unit = () => {
 
     const remValue = useContext(RemContext);
 
-    return value * remValue;
+    return remValue;
 };
 
 
@@ -137,16 +137,16 @@ export function useUnit(value: string): number {
 export function useUnits() {
 
     return {
-        rem: useRem(1),
-        pt: usePt(1),
-        pc: usePc(1),
-        in: useIn(1),
-        cm: useCm(1),
-        mm: useMm(1),
-        vmin: useVmin(1),
-        vmax: useVmax(1),
-        vh: useVh(1),
-        vw: useVw(1)
+        rem: useRem(),
+        pt: usePt(),
+        pc: usePc(),
+        in: useIn(),
+        cm: useCm(),
+        mm: useMm(),
+        vmin: useVmin(),
+        vmax: useVmax(),
+        vh: useVh(),
+        vw: useVw()
     };
 };
 
