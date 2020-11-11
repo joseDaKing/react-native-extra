@@ -33,7 +33,8 @@ import {
     useOrientationMediaQuery,
     usePlatformMediaQuery,
     useMediaQuery,
-    useInitMediaQuery
+    UseMediaQuery,
+    useInitMediaQuery,
 }
 from "./media-query-hooks";
 
@@ -54,6 +55,7 @@ export {
     OnInvertedColors,
     useInitMediaQuery,
     useMediaQuery,
+    UseMediaQuery,
     useInvertedColorsMediaQuery,
     useHeightMediaQuery,
     useAspectRatioMediaQuery,

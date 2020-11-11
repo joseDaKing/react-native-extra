@@ -1,4 +1,4 @@
-import React, { Context, useContext } from "react";
+import React, { Context, PropsWithChildren, useContext } from "react";
 
 import { AspectRatio } from "./types"
 

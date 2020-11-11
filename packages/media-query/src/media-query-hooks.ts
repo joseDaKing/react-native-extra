@@ -20,15 +20,15 @@ import { BreakpointsContextValue } from "./media-query-components";
 
 
 
-export type MediaQuery<BreakpointValue> = (breakpointValue: BreakpointValue) => boolean;
+type MediaQuery<BreakpointValue> = (breakpointValue: BreakpointValue) => boolean;
 
-export type CreateMediaQuery<Value, BreakpointValue> = (value?: Value) => MediaQuery<BreakpointValue>; 
+type CreateMediaQuery<Value, BreakpointValue> = (value?: Value) => MediaQuery<BreakpointValue>; 
 
 
 
 type CreateDimensionMediaQuery = CreateMediaQuery<number, number>;
 
-export const createMinWidthMediaQuery: CreateDimensionMediaQuery = width => breakpointWidth => {
+const createMinWidthMediaQuery: CreateDimensionMediaQuery = width => breakpointWidth => {
     
     return breakpointWidth <= (width ? width : useWindowDimensions().width);
 };
@@ -37,7 +37,7 @@ export const useMinWidthMediaQuery = createMinWidthMediaQuery();
 
 
 
-export const createMaxWidthMediaQuery: CreateDimensionMediaQuery = width => breakpointWidth => {
+const createMaxWidthMediaQuery: CreateDimensionMediaQuery = width => breakpointWidth => {
 
     return (width ? width : useWindowDimensions().width) <= breakpointWidth;
 };
@@ -46,7 +46,7 @@ export const useMaxWidthMediaQuery = createMaxWidthMediaQuery();
 
 
 
-export const createWidthMediaQuery: CreateDimensionMediaQuery = width => {
+const createWidthMediaQuery: CreateDimensionMediaQuery = width => {
 
     return breakpointWidth => {
 
@@ -58,7 +58,7 @@ export const useWidthMediaQuery: MediaQuery<number> = createWidthMediaQuery();
 
 
 
-export const createMinHeightMediaQuery: CreateDimensionMediaQuery = height => breakpointHeight => {
+const createMinHeightMediaQuery: CreateDimensionMediaQuery = height => breakpointHeight => {
 
     return breakpointHeight <= (height ? height : useWindowDimensions().height);
 };
@@ -67,7 +67,7 @@ export const useMinHeightMediaQuery = createMinHeightMediaQuery();
 
 
 
-export const createMaxHeightMediaQuery: CreateDimensionMediaQuery = height => breakpointHeight => {
+const createMaxHeightMediaQuery: CreateDimensionMediaQuery = height => breakpointHeight => {
 
     return (height ? height : useWindowDimensions().height) <= breakpointHeight;
 };
@@ -76,7 +76,7 @@ export const useMaxHeightMediaQuery = createMaxHeightMediaQuery();
 
 
 
-export const createHeightMediaQuery: CreateDimensionMediaQuery = height => {
+const createHeightMediaQuery: CreateDimensionMediaQuery = height => {
 
     return breakpointHeight => {
 
@@ -90,7 +90,7 @@ export const useHeightMediaQuery: MediaQuery<number> = createHeightMediaQuery();
 
 type CreateAspectRatioMediaQuery = CreateMediaQuery<Dimensions, AspectRatio>;
 
-export const createMinAspectRatioMediaQuery: CreateAspectRatioMediaQuery = dimensions => aspectRatio => {
+const createMinAspectRatioMediaQuery: CreateAspectRatioMediaQuery = dimensions => aspectRatio => {
 
     return (
         validateAspectRatioValue(aspectRatio)
@@ -102,7 +102,7 @@ export const useMinAspectRatioMediaQuery = createMinAspectRatioMediaQuery();
 
 
 
-export const createMaxAspectRatioMediaQuery: CreateAspectRatioMediaQuery = dimension => aspectRatio => {
+const createMaxAspectRatioMediaQuery: CreateAspectRatioMediaQuery = dimension => aspectRatio => {
 
     return (
         validateAspectRatioValue(aspectRatio)
@@ -114,7 +114,7 @@ export const useMaxAspectRatioMediaQuery = createMaxAspectRatioMediaQuery();
 
 
 
-export const createAspectRatioMediaQuery: CreateAspectRatioMediaQuery = dimension => aspectRatio => {
+const createAspectRatioMediaQuery: CreateAspectRatioMediaQuery = dimension => aspectRatio => {
 
     return (
         validateAspectRatioValue(aspectRatio) 
@@ -204,7 +204,7 @@ const useGetPrefersReducedMotionValueNative = (): PrefersReducedMotionValue => {
 
     const [prefersReducedMotionValue, setPrefersReducedMotionValue] = useState<PrefersReducedMotionValue>(inititialValue);
 
-    const listener = (isReducedMotionEnabled: boolean) => setPrefersReducedMotionValue(AccessibilityInfo ?  "reduce" : "no-preference");
+    const listener = (isReducedMotionEnabled: boolean) => setPrefersReducedMotionValue(isReducedMotionEnabled ?  "reduce" : "no-preference");
 
     useAssignChangeListener(AccessibilityInfo, listener);
 
@@ -226,7 +226,7 @@ const useGetPrefersReducedMotionValueWeb = (): PrefersReducedMotionValue => {
     return prefersReducedMotionValue;
 };
 
-export const useGetPrefersReducedMotionValue = (): PrefersReducedMotionValue => {
+const useGetPrefersReducedMotionValue = (): PrefersReducedMotionValue => {
     
     if (usePlatformMediaQuery("web")) {
 
@@ -238,7 +238,7 @@ export const useGetPrefersReducedMotionValue = (): PrefersReducedMotionValue => 
     }
 };
 
-export const createPrefersReducedMotionMediaQuery: CreateMediaQuery<PrefersReducedMotionValue, PrefersReducedMotionValue> = value => mediaqueryValue => {
+const createPrefersReducedMotionMediaQuery: CreateMediaQuery<PrefersReducedMotionValue, PrefersReducedMotionValue> = value => mediaqueryValue => {
 
     return mediaqueryValue === (value ? value : useGetPrefersReducedMotionValue());
 };
@@ -277,7 +277,7 @@ const useGetInvertedColorValueWeb = (): InvertedColorsValue => {
     return invertedColorValue;
 };
 
-export const useGetInvertedColorValue = (): InvertedColorsValue => {
+const useGetInvertedColorValue = (): InvertedColorsValue => {
 
     if (usePlatformMediaQuery("web")) {
 
@@ -289,7 +289,7 @@ export const useGetInvertedColorValue = (): InvertedColorsValue => {
     }
 };
 
-export const createInvertedColorsMediaQuery: CreateMediaQuery<InvertedColorsValue, InvertedColorsValue> = value => mediaqueryValue => {
+const createInvertedColorsMediaQuery: CreateMediaQuery<InvertedColorsValue, InvertedColorsValue> = value => mediaqueryValue => {
 
     return mediaqueryValue === (value ? value : useGetInvertedColorValue());
 };
@@ -322,7 +322,7 @@ function useAssignChangeListener<Input extends any[] = []>(listenerObject: Liste
 
 
 
-export const createOrientationMediaQuery: CreateMediaQuery<Dimensions, "landscape" | "portrait"> = dimensions => orientation => {
+const createOrientationMediaQuery: CreateMediaQuery<Dimensions, "landscape" | "portrait"> = dimensions => orientation => {
     
     const { height, width } = dimensions ? dimensions : useWindowDimensions();
 
@@ -336,7 +336,7 @@ export const useOrientationMediaQuery = createOrientationMediaQuery();
 
 type PrefersColorSchemeValue = "dark" | "light";
 
-export const createPrefersColorSchemeMediaQuery: CreateMediaQuery<PrefersColorSchemeValue, PrefersColorSchemeValue> = value => theme => {
+const createPrefersColorSchemeMediaQuery: CreateMediaQuery<PrefersColorSchemeValue, PrefersColorSchemeValue> = value => theme => {
 
     return (value ? value : useColorScheme()) === theme;
 };
@@ -368,26 +368,51 @@ export type UseMediaQuery = (mediaQuery: string) => boolean;
 
 export const useInitMediaQuery = (): UseMediaQuery => {
 
-    const mediaMatchers = useCreateMediaMatchers();
+    const mediaQueryMetadata = useMediaQueryMetadata();
 
-    return (mediaQuery: string) => {
+    return useMemo((): UseMediaQuery => {
 
-        const mediaQueryAST = parseMediaQuery(mediaQuery);
+        const mediaMatchers = useCreateMediaMatchers(mediaQueryMetadata);
 
-        return isValidMediaQueryAst(mediaQueryAST) && getMediaQueryResult(mediaQueryAST, mediaMatchers);
-    };
+        return (mediaQuery: string) => {
+
+            const mediaQueryAST = parseMediaQuery(mediaQuery);
+
+            return isValidMediaQueryAst(mediaQueryAST) && getMediaQueryResult(mediaQueryAST, mediaMatchers);
+        };
+
+    }, Object.values(mediaQueryMetadata));
 };
 
 export const useMediaQuery = (mediaQuery: string): boolean => {
     
-    const useMediaQueryHook = useInitMediaQuery();
+    const mediaQueryMetadata = useMediaQueryMetadata();
 
-    return useMediaQueryHook(mediaQuery); 
+    const dependcyArray = [
+        mediaQuery,
+        ...Object.values(mediaQueryMetadata)
+    ];
+
+    return useMemo((): boolean => {
+        
+        const mediaMatchers = useCreateMediaMatchers(mediaQueryMetadata);    
+
+        const mediaQueryAST = parseMediaQuery(mediaQuery);
+
+        return isValidMediaQueryAst(mediaQueryAST) && getMediaQueryResult(mediaQueryAST, mediaMatchers);
+
+    }, dependcyArray);
 };
 
-function useCreateMediaMatchers(): MediaMatchers {
+type MediaQueryMetadata = Dimensions & {
+    invertedColor: InvertedColorsValue;
+    prefersReducedMotion: PrefersReducedMotionValue;
+    prefersColorScheme: PrefersColorSchemeValue;
+}
 
-    const dimensions = useWindowDimensions();
+function useMediaQueryMetadata(): MediaQueryMetadata {
+
+    const { width, height } = useWindowDimensions();
 
     const invertedColorValue = useGetInvertedColorValue();
 
@@ -397,21 +422,32 @@ function useCreateMediaMatchers(): MediaMatchers {
 
     const theme = colorSchemeValue ? colorSchemeValue : "light";
 
+    return {
+        width,
+        height,
+        invertedColor: invertedColorValue,
+        prefersReducedMotion: prefersReducedMotionValue,
+        prefersColorScheme: theme
+    };
+};
+
+function useCreateMediaMatchers(mediaQueryMetadata: MediaQueryMetadata): MediaMatchers {
+
     const mediaMatchers: MediaMatchers = {
-        width: createWidthMediaQuery(dimensions.width),
-        "min-width": createMinWidthMediaQuery(dimensions.width),
-        "max-width": createMaxWidthMediaQuery(dimensions.width),
-        height: createHeightMediaQuery(dimensions.height),
-        "min-height": createMinHeightMediaQuery(dimensions.height),
-        "max-height": createMaxHeightMediaQuery(dimensions.height),
-        "aspect-ratio": createAspectRatioMediaQuery(dimensions),
-        "min-aspect-ratio": createMinAspectRatioMediaQuery(dimensions),
-        "max-aspect-ratio": createMaxAspectRatioMediaQuery(dimensions),
-        "inverted-colors": createInvertedColorsMediaQuery(invertedColorValue),
-        "prefers-reduced-motion": createPrefersReducedMotionMediaQuery(prefersReducedMotionValue),
+        width: createWidthMediaQuery(mediaQueryMetadata.width),
+        "min-width": createMinWidthMediaQuery(mediaQueryMetadata.width),
+        "max-width": createMaxWidthMediaQuery(mediaQueryMetadata.width),
+        height: createHeightMediaQuery(mediaQueryMetadata.height),
+        "min-height": createMinHeightMediaQuery(mediaQueryMetadata.height),
+        "max-height": createMaxHeightMediaQuery(mediaQueryMetadata.height),
+        "aspect-ratio": createAspectRatioMediaQuery(mediaQueryMetadata),
+        "min-aspect-ratio": createMinAspectRatioMediaQuery(mediaQueryMetadata),
+        "max-aspect-ratio": createMaxAspectRatioMediaQuery(mediaQueryMetadata),
+        "inverted-colors": createInvertedColorsMediaQuery(mediaQueryMetadata.invertedColor),
+        "prefers-reduced-motion": createPrefersReducedMotionMediaQuery(mediaQueryMetadata.prefersReducedMotion),
         platform: usePlatformMediaQuery,
-        orientation: createOrientationMediaQuery(dimensions),
-        "prefers-color-scheme": createPrefersColorSchemeMediaQuery(theme),
+        orientation: createOrientationMediaQuery(mediaQueryMetadata),
+        "prefers-color-scheme": createPrefersColorSchemeMediaQuery(mediaQueryMetadata.prefersColorScheme)
     };
 
     return mediaMatchers;
@@ -557,9 +593,9 @@ export const useMediaQueryFromContext = <ContextValue extends BreakpointsContext
 
     const mediaQuery = useInitMediaQuery();
 
-    return (breakpoint: keyof Context<ContextValue>): boolean => {
+    return (breakpoint: keyof ContextValue["breakpoints"]): boolean => {
 
-        const mediaQueryString = breakpoints[breakpoint];
+        const mediaQueryString = breakpoints[breakpoint as string];
 
         return mediaQuery(mediaQueryString);
     };
