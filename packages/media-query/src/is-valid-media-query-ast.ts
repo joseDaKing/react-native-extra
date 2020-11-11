@@ -15,7 +15,7 @@ export function isValidMediaQueryAst(mediaQueryAST: MediaQuerAST): boolean {
     }
 };
 
-const isPxRegex = /^\d+(px|rem)$/;
+const isPxRegex = /^\d+px$/;
 
 function isValidQueryNodeExpressions(mediaQueryAST: MediaQuerAST): boolean {
 

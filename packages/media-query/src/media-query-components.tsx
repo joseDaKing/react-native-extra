@@ -1,9 +1,8 @@
 import React, { Context, useContext } from "react";
-import { View } from "react-native";
 
 import { AspectRatio } from "./types"
 
-import { useMediaQuery } from "./use-media-query";
+import { useMediaQuery } from "./media-query-hooks";
 
 
 
@@ -11,7 +10,7 @@ export type BreakpointsContextValue = {
     breakpoints: Record<string, string>;
 }
 
-export type MediaQueryComponentFromContextProps<ContextValue extends BreakpointsContextValue> = {
+type MediaQueryComponentFromContextProps<ContextValue extends BreakpointsContextValue> = {
     type: keyof ContextValue["breakpoints"]
 }
 
@@ -108,121 +107,82 @@ export const OnMediaQuery: React.FC<OnMediaQueryProps> = props => {
     );
 };
 
-function createMediaQueryStringFromProps(mediaQueries: OnMediaQueryProps): string {
+type MediaQueryStrings = {
+    [Key in keyof OnMediaQueryProps]: string;
+}
 
-    let mediaQueryStrings: string[] = [];
+function createMediaQueryStringFromProps(props: OnMediaQueryProps): string {
 
-    for (const key in mediaQueries) {
-        
-        const mediaQueryType = key as keyof OnMediaQueryProps;
+    const mediaQueryStrings: MediaQueryStrings = {};
 
-        let value = mediaQueries[mediaQueryType] as string | number | [number, number];
+    applyAspectRatioMediaQueryStrings(mediaQueryStrings, props);
 
-        if (Array.isArray(value)) {
-            
-            const [widthRatio, heightRatio] = value;
+    applyHeightMediaQueryStrings(mediaQueryStrings, props);
 
-            value = `${widthRatio}/${heightRatio}`;
- 
-            switch(mediaQueryType) {
-            
-                case "aspectRatio":
-    
-                    mediaQueryStrings.push(`(aspect-ratio: ${value})`);
-                break;
-                
-                case "minAspectRatio":
-    
-                    mediaQueryStrings.push(`(minAspect-ratio: ${value})`);
-                break;
-                
-                case "maxAspectRatio":
-    
-                    mediaQueryStrings.push(`(maxAspect-ratio: ${value})`);
-                break;
-            };
-        }
-        else if (typeof value === "number") {
-            
-            value = `${value}px`;
+    applyWidthMediaQueryStrings(mediaQueryStrings, props);
 
-            switch(mediaQueryType) {
+    const completeMediaQueryString = Object.values(mediaQueryStrings).join(" and ").trim();
 
-                case "height":
-                    mediaQueryStrings.push(`(width: ${value})`);
-                break;
-                
-                case "minWidth":
-
-                    mediaQueryStrings.push(`(min-width: ${value})`);
-                break;
-                
-                case "maxWidth":
-
-                    mediaQueryStrings.push(`(max-width: ${value})`);
-                break;
-                
-                case "height":
-
-                    mediaQueryStrings.push(`(height: ${value})`);
-                break;
-                
-                case "minHeight":
-
-                    mediaQueryStrings.push(`(min-height: ${value})`);
-                break;
-                
-                case "maxHeight":
-
-                    mediaQueryStrings.push(`(max-height: ${value})`);
-                break;
-            };
-        }
-        else {
-            
-            switch(mediaQueryType) {
-                
-                case "invertedColors":
-
-                    mediaQueryStrings.push(`(inverted-colors: ${value})`);
-                break;
-                
-                case "prefersReducedMotion":
-    
-                    mediaQueryStrings.push(`(prefers-reduced-motion: ${value})`);
-                break;
-                
-                case "platform":
-    
-                    mediaQueryStrings.push(`(platform: ${value})`);
-                break;
-                
-                case "orentation":
-    
-                    mediaQueryStrings.push(`(orentation: ${value})`);
-                break;
-                
-                case "prefersColorScheme":
-    
-                    mediaQueryStrings.push(`(prefers-color-scheme: ${value})`);
-                break;
-            };
-        } 
-   
-        const mediaQueryString = "";
-
-        mediaQueryStrings.push(mediaQueryString);
-    }
-
-    return mediaQueryStrings.join(" and ").trim();
+    return completeMediaQueryString;
 };
 
+function applyHeightMediaQueryStrings(mediaQueryStrings: MediaQueryStrings, props: OnMediaQueryProps): void {
 
-const Abra = () => {
-    
-    return (
-        <View>
-            
-        </View>
-    );
+    if (props.height) {
+
+        mediaQueryStrings.height = `(height: ${props.height}px)`;
+    }
+
+    if (props.minHeight) {
+
+        mediaQueryStrings.minHeight = `(min-height: ${props.minHeight}px)`;
+    }
+
+    if (props.maxHeight) {
+
+        mediaQueryStrings.maxHeight = `(max-height: ${props.maxHeight}px)`;
+    }
+};
+
+function applyWidthMediaQueryStrings(mediaQueryStrings: MediaQueryStrings, props: OnMediaQueryProps): void {
+
+    if (props.width) {
+
+        mediaQueryStrings.width = `(width: ${props.width}px)`;
+    }
+
+    if (props.minWidth) {
+
+        mediaQueryStrings.minWidth = `(min-width: ${props.minWidth}px)`;
+    }
+
+    if (props.maxWidth) {
+
+        mediaQueryStrings.maxWidth = `(max-width: ${props.maxWidth}px)`;
+    }
+};
+
+function applyAspectRatioMediaQueryStrings(mediaQueryStrings: MediaQueryStrings, props: OnMediaQueryProps): void {
+
+    if (props.aspectRatio) {
+
+        mediaQueryStrings.aspectRatio = `(aspect-ratio: ${getAspectRatioInString(props.aspectRatio)})`;
+    };
+
+    if (props.maxAspectRatio) {
+
+        mediaQueryStrings.aspectRatio = `(aspect-ratio: ${getAspectRatioInString(props.maxAspectRatio)})`;
+    }
+
+    if (props.minAspectRatio) {
+
+        mediaQueryStrings.aspectRatio = `(aspect-ratio: ${getAspectRatioInString(props.minAspectRatio)})`;
+    }
+};
+
+function getAspectRatioInString(aspectRatio: AspectRatio): string {
+
+    const [widthRatio, heightRatio] = aspectRatio;
+
+    return `${widthRatio}/${heightRatio}`;
 };
