@@ -1,4 +1,7 @@
 {
+  "publishConfig": {
+    "access": "public"
+  },
   "name": "@react-native-extra/media-query",
   "version": "0.1.0",
   "description": "A library that makes it possible to use media queries in react native. The library has similar api react-responsive bu not exactly the same.",
