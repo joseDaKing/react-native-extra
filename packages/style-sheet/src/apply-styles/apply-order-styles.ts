@@ -25,7 +25,7 @@ export function applyOrderStyles<Style extends BaseStyle>(styleProps: StyleProps
 
     for (const selector in stylePropsAsRecord) {        
 
-        if (isOrderSelector(selector) && shouldApplyOrderStyles(selector, orderVariantSettings)) {
+        if (isOrderSelector(selector) && shouldApplyOrderStyles(removeWhiteSpace(selector) as typeof selector, orderVariantSettings)) {
 
             const nestedStyleProps = {...stylePropsAsRecord[selector]};
 
@@ -45,6 +45,10 @@ export function applyOrderStyles<Style extends BaseStyle>(styleProps: StyleProps
 };
 
 
+function removeWhiteSpace(value: string): string {
+
+    return value.replace(/\s+/gm, "");
+};
 
 function shouldApplyOrderStyles(selector: OrderSelector, { index, length }: OrderVariantSettings): boolean {
     
@@ -101,7 +105,7 @@ function shouldApplyOrderStyles(selector: OrderSelector, { index, length }: Orde
     }
 
     return isValid;
-}
+};
 
 
 
