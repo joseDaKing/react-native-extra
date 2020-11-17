@@ -4,11 +4,11 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import * as hooks from './packages/media-query/src';
 
+import "./packages/style-sheet/src/apply-styles";
+
 
 
 export default function App() {
-
-  const isMatching = hooks.useMediaQuery("(aspect-ratio: 1/2) and (max-width: 1024px)")
 
   return (
     <View 
