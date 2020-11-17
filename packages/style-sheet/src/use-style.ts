@@ -30,7 +30,8 @@ type RemoveUnwantedStyleProps<Style extends BaseStyle> = (
         | "shadowColor"
         | "shadowOffset"
         | "shadowOpacity"
-        | "shadowRadius" 
+        | "shadowRadius"
+        | "elevation"
     >
 );
 
