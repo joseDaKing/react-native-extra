@@ -35,6 +35,7 @@ import {
     useMediaQuery,
     UseMediaQuery,
     useInitMediaQuery,
+    isValidMediaQueryString
 }
 from "./media-query-hooks";
 
@@ -70,5 +71,6 @@ export {
     usePrefersReducedMotionMediaQuery,
     useOrientationMediaQuery,
     usePlatformMediaQuery,
-    useMediaQueryFromContext
+    useMediaQueryFromContext,
+    isValidMediaQueryString
 }
