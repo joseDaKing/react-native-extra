@@ -14,8 +14,6 @@ import {
 }
 from "css-mediaquery";
 
-import { isValidMediaQueryAst } from "./is-valid-media-query-ast";
-
 import { BreakpointsContextValue } from "./media-query-components";
 
 
@@ -378,7 +376,10 @@ export const useInitMediaQuery = (): UseMediaQuery => {
 
             const mediaQueryAST = parseMediaQuery(mediaQuery);
 
-            return isValidMediaQueryAst(mediaQueryAST) && getMediaQueryResult(mediaQueryAST, mediaMatchers);
+            return (
+                isValidMediaQueryString(mediaQuery) 
+                && getMediaQueryResult(mediaQueryAST, mediaMatchers)
+            );
         };
 
     }, Object.values(mediaQueryMetadata));
@@ -399,10 +400,46 @@ export const useMediaQuery = (mediaQuery: string): boolean => {
 
         const mediaQueryAST = parseMediaQuery(mediaQuery);
 
-        return isValidMediaQueryAst(mediaQueryAST) && getMediaQueryResult(mediaQueryAST, mediaMatchers);
+        return (
+            isValidMediaQueryString(mediaQuery) 
+            && getMediaQueryResult(mediaQueryAST, mediaMatchers)
+        );
 
     }, dependcyArray);
 };
+
+
+
+const isValidDimensionMediaQueryExpressionRegexString = `(((max|min)-)?(width|height|aspect-ratio)):\\s*\\d+px`;
+
+const isValidInvertedColorMediaQueryExpressionRegexString = "(inverted-colors:\\s*inverted|none)";
+
+const isValidPrefersReducedMotionMediaQueryExpressionRegexString = "(prefers-reduced-motion:\\s*reduced|no-preference)";
+
+const isValidPlatformMediaQueryExpressionRegexString = "(platform:\\s*ios|android|mobile|macos|windows|desktop|web)";
+
+const isValidOrientationMediaQueryExpressionRegexString = "(orientation:\\s*landscape|portrait)";
+
+const isValidPrefersColorSchemeQueryExpressionRegexString = "(prefers-color-scheme:\\s*dark|light)";
+
+const isValidMediaQueryExpressionRegexString = `(${[
+    isValidDimensionMediaQueryExpressionRegexString,
+    isValidInvertedColorMediaQueryExpressionRegexString,
+    isValidPrefersReducedMotionMediaQueryExpressionRegexString,
+    isValidPlatformMediaQueryExpressionRegexString,
+    isValidOrientationMediaQueryExpressionRegexString,
+    isValidPrefersColorSchemeQueryExpressionRegexString,
+]
+.join("|")})`.trim();
+
+const isValidMediaQueryStringRegex = new RegExp(`^\\s*(@media\\s*\\(\\s*${isValidMediaQueryExpressionRegexString}\\s*\\))\\s*(\\s*(and|,)\\s*\\(\\s*${isValidMediaQueryExpressionRegexString}\\s*\\))*$`);
+
+function isValidMediaQueryString(mediaQuery: string): boolean {
+
+    return isValidMediaQueryStringRegex.test(mediaQuery);
+};
+
+
 
 type MediaQueryMetadata = Dimensions & {
     invertedColor: InvertedColorsValue;
