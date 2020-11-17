@@ -435,7 +435,7 @@ const isValidMediaQueryExpressionRegexString = `(${isValidMediaQueryExpressionRe
 
 const isValidMediaQueryStringRegex = new RegExp(`^\\s*(@media\\s*\\(\\s*${isValidMediaQueryExpressionRegexString}\\s*\\))\\s*(\\s*(and|,)\\s*\\(\\s*${isValidMediaQueryExpressionRegexString}\\s*\\))*$`);
 
-function isValidMediaQueryString(mediaQuery: string): boolean {
+export function isValidMediaQueryString(mediaQuery: string): boolean {
 
     return isValidMediaQueryStringRegex.test(mediaQuery);
 };
