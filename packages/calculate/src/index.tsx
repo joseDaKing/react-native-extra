@@ -154,7 +154,7 @@ export function useUnits() {
 
 const isValueRegex = /^\d+(vh|vw|vmax|vmin|mm|cm|in|pt|pc|rem|px)$/;
 
-const hasUnvalidUnit = /^\d([A-Za-z]+)$/;
+const hasUnvalidUnit = /^\d+([A-Za-z]+)$/;
 
 const extractUnvalidUnitRegex = /(?=[A-Za-z]+)/;
 
@@ -174,18 +174,21 @@ export function validateUnit(value: string): void {
 };
 
 
+type  UseCalc = (expression: string) => number;
 
-export function useInitCalc() {
+export function useInitCalc(): UseCalc {
     
     const units = useUnits();
 
-    return (expression: string): number => {
+    const useCalc: UseCalc = (expression: string): number => {
 
         return calculate(expression, value => computeUnitValue(value, units));
     };
+
+    return useCalc;
 };
 
-export function useCalc(expression: string): number {
+export const useCalc: UseCalc = expression => {
 
     const calc = useInitCalc();
 
