@@ -26,5 +26,9 @@
   "bugs": {
     "url": "https://github.com/joseDaKing/react-native-extra/issues"
   },
-  "homepage": "https://github.com/joseDaKing/react-native-extra#readme"
+  "homepage": "https://github.com/joseDaKing/react-native-extra#readme",
+  "dependencies": {
+    "@react-native-extra/calculate": "^0.2.1",
+    "@react-native-extra/media-query": "^0.2.0"
+  }
 }
