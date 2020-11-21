@@ -1,0 +1,30 @@
+{
+  "name": "@react-native-extra/style-sheet",
+  "version": "0.1.0",
+  "description": "A extended stylesheet with extra features",
+  "main": "./dest/index.js",
+  "types": "./src/index.ts",
+  "scripts": {
+    "prepublish": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joseDaKing/react-native-extra.git"
+  },
+  "keywords": [
+    "css",
+    "sass",
+    "scss",
+    "html",
+    "react",
+    "react-native",
+    "style-sheet",
+    "extended-style-sheet"
+  ],
+  "author": "Yosuef Abdulkarim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joseDaKing/react-native-extra/issues"
+  },
+  "homepage": "https://github.com/joseDaKing/react-native-extra#readme"
+}
