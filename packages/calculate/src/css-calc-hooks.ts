@@ -2,7 +2,7 @@ import { useMemo } from "react";
 
 import { useUnits } from "./css-unit-hooks";
 
-import { computeCssNumberValue} from "./css-number-value-hooks";
+import { computeUnitValue} from "./css-number-value-hooks";
 
 import calculate from "calc-units";
 
@@ -16,7 +16,7 @@ export const useCalcFactory = (): UseCalc => {
 
     const useCalc: UseCalc = (expression: string): number => {
 
-        return calculate(expression, value => computeCssNumberValue(value, units));
+        return calculate(expression, value => computeUnitValue(value, units));
     };
 
     return useCalc;
