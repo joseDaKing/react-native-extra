@@ -364,7 +364,7 @@ type MediaMatchersKeys = keyof MediaMatchers;
 
 export type UseMediaQuery = (mediaQuery: string) => boolean;
 
-export const useInitMediaQuery = (): UseMediaQuery => {
+export const useMediaQueryFactory = (): UseMediaQuery => {
 
     const mediaQueryMetadata = useMediaQueryMetadata();
 
@@ -629,7 +629,7 @@ export const useMediaQueryFromContext = <ContextValue extends BreakpointsContext
 
     const { breakpoints } = useContext(context);
 
-    const mediaQuery = useInitMediaQuery();
+    const mediaQuery = useMediaQueryFactory();
 
     return (breakpoint: keyof ContextValue["breakpoints"]): boolean => {
 

@@ -1,6 +1,6 @@
 import { 
-    createMediaQueryComponetFromString,
-    createMediaQueryComponentFromContext,
+    mediaQueryComponetFromStringFactory,
+    mediaQueryComponentFromContextFactory,
     OnMediaQuery,
     OnAndroidPlatform,
     OnDarkTheme,
@@ -34,14 +34,14 @@ import {
     usePlatformMediaQuery,
     useMediaQuery,
     UseMediaQuery,
-    useInitMediaQuery,
+    useMediaQueryFactory,
     isValidMediaQueryString
 }
 from "./media-query-hooks";
 
 export {
-    createMediaQueryComponetFromString,
-    createMediaQueryComponentFromContext,
+    mediaQueryComponetFromStringFactory,
+    mediaQueryComponentFromContextFactory,
     OnMediaQuery,
     OnAndroidPlatform,
     OnDarkTheme,
@@ -54,7 +54,7 @@ export {
     OnDesktopPlatform,
     OnPrefersReducedMotion,
     OnInvertedColors,
-    useInitMediaQuery,
+    useMediaQueryFactory,
     useMediaQuery,
     UseMediaQuery,
     useInvertedColorsMediaQuery,

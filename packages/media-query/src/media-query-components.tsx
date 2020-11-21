@@ -1,4 +1,4 @@
-import React, { Context, PropsWithChildren, useContext } from "react";
+import React, { Context, useContext } from "react";
 
 import { AspectRatio } from "./types"
 
@@ -14,7 +14,7 @@ type MediaQueryComponentFromContextProps<ContextValue extends BreakpointsContext
     type: keyof ContextValue["breakpoints"]
 }
 
-export function createMediaQueryComponentFromContext<ContextValue extends BreakpointsContextValue>(context: Context<ContextValue>): React.FC<MediaQueryComponentFromContextProps<ContextValue>> {
+export function mediaQueryComponentFromContextFactory<ContextValue extends BreakpointsContextValue>(context: Context<ContextValue>): React.FC<MediaQueryComponentFromContextProps<ContextValue>> {
     
     const OnBreakpoints: React.FC<MediaQueryComponentFromContextProps<ContextValue>> = ({ type, children }) => {
 
@@ -35,7 +35,7 @@ export function createMediaQueryComponentFromContext<ContextValue extends Breakp
     return OnBreakpoints;
 };
 
-export function createMediaQueryComponetFromString(mediaQuery: string): React.FC {
+export function mediaQueryComponetFromStringFactory(mediaQuery: string): React.FC {
     
     const OnMediaQuery: React.FC = ({ children }: any) => {
 
@@ -51,27 +51,27 @@ export function createMediaQueryComponetFromString(mediaQuery: string): React.FC
     return OnMediaQuery;
 };
 
-export const OnIosPlatform = createMediaQueryComponetFromString("(platform: ios)");
+export const OnIosPlatform = mediaQueryComponetFromStringFactory("(platform: ios)");
 
-export const OnAndroidPlatform = createMediaQueryComponetFromString("(platform: android)");
+export const OnAndroidPlatform = mediaQueryComponetFromStringFactory("(platform: android)");
 
-export const OnMobilePlatform = createMediaQueryComponetFromString("(platform: mobile)");
+export const OnMobilePlatform = mediaQueryComponetFromStringFactory("(platform: mobile)");
 
-export const OnDesktopPlatform = createMediaQueryComponetFromString("platform: desktop");
+export const OnDesktopPlatform = mediaQueryComponetFromStringFactory("platform: desktop");
 
-export const OnWebPlatform = createMediaQueryComponetFromString("(platform: web)");
+export const OnWebPlatform = mediaQueryComponetFromStringFactory("(platform: web)");
 
-export const OnLightTheme = createMediaQueryComponetFromString("(prefers-color-scheme: light)");
+export const OnLightTheme = mediaQueryComponetFromStringFactory("(prefers-color-scheme: light)");
 
-export const OnDarkTheme = createMediaQueryComponetFromString("(prefers-color-scheme: dark)");
+export const OnDarkTheme = mediaQueryComponetFromStringFactory("(prefers-color-scheme: dark)");
 
-export const OnLandscape = createMediaQueryComponetFromString("(orientation: landscape)");
+export const OnLandscape = mediaQueryComponetFromStringFactory("(orientation: landscape)");
 
-export const OnPortrait = createMediaQueryComponetFromString("(orientation: portrait)");
+export const OnPortrait = mediaQueryComponetFromStringFactory("(orientation: portrait)");
 
-export const OnPrefersReducedMotion = createMediaQueryComponetFromString("prefers-reduced-motion: reduced");
+export const OnPrefersReducedMotion = mediaQueryComponetFromStringFactory("prefers-reduced-motion: reduced");
 
-export const OnInvertedColors = createMediaQueryComponetFromString("inverted-colors: inverted");
+export const OnInvertedColors = mediaQueryComponetFromStringFactory("inverted-colors: inverted");
 
 
 
