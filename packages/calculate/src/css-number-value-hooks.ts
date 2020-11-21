@@ -1,40 +1,40 @@
 import { useMemo } from "react";
 
 import {
-    useCssUnits,
-    CssUnitsObject,
-    CssUnits
+    useUnits,
+    UnitsObject,
+    Units
 }
 from "./css-unit-hooks";
 
 
 
-export const useInitCssNumberValue = () => {
+export const useUnitValueFactory = () => {
 
-    const units = useCssUnits();
+    const units = useUnits();
 
-    const useCssNumberValue = (value: string): number => {
+    const useNumberValue = (value: string): number => {
 
-        return computeCssNumberValue(value, units);
+        return computeUnitValue(value, units);
     };
 
-    return useCssNumberValue;
+    return useNumberValue;
 };
 
-export const useCssNumberValue = (value: string): number => {
+export const useUnitValue = (value: string): number => {
 
-    const cssNumberValue = useInitCssNumberValue();
+    const unitValue = useUnitValueFactory();
 
-    return useMemo(() => cssNumberValue(value), [ value ]);
+    return useMemo(() => unitValue(value), [ value ]);
 };
 
 
 
-export function computeCssNumberValue(value: string, units: CssUnitsObject): number {
+export function computeUnitValue(value: string, units: UnitsObject): number {
 
     validateUnit(value);
 
-    const [factor, unit] = extractCssNumberValue(value);
+    const [factor, unit] = extractUnitValue(value);
 
     let pixels: number;
 
@@ -52,28 +52,28 @@ export function computeCssNumberValue(value: string, units: CssUnitsObject): num
     return pixels;
 };
 
-const extractCssNumberValueRegex = /(?=(vh|vw|vmax|vmin|mm|cm|in|pt|pc|rem|px))/;
+const extractUnitValueRegex = /(?=(vh|vw|vmax|vmin|mm|cm|in|pt|pc|rem|px))/;
 
-function extractCssNumberValue(value: string): [number, CssUnits|"px"] {
+function extractUnitValue(value: string): [number, Units|"px"] {
 
-    return value.split(extractCssNumberValueRegex) as [number, CssUnits|"px"];
+    return value.split(extractUnitValueRegex) as [number, Units|"px"];
 };
 
 
 
-const isCssNumberValueRegex = /^\d+(vh|vw|vmax|vmin|mm|cm|in|pt|pc|rem|px)$/;
+const isUnitValueRegex = /^\d+(vh|vw|vmax|vmin|mm|cm|in|pt|pc|rem|px)$/;
 
-const hasUnvalidCssNumberValue = /^\d+([A-Za-z]+)$/;
+const hasUnvalidUnitValue = /^\d+([A-Za-z]+)$/;
 
-const extractUnvalidCssNumberValueRegex = /(?=[A-Za-z]+)/;
+const extractUnvalidUnitValueRegex = /(?=[A-Za-z]+)/;
 
 function validateUnit(value: string): void {
 
-    if (!isCssNumberValueRegex.test(value)) {
+    if (!isUnitValueRegex.test(value)) {
 
-        if (hasUnvalidCssNumberValue.test(value)) {
+        if (hasUnvalidUnitValue.test(value)) {
 
-            const [, unit] = value.split(extractUnvalidCssNumberValueRegex);
+            const [, unit] = value.split(extractUnvalidUnitValueRegex);
 
             throw new Error(`Unsported unit type ${unit} in ${value}`);
         }

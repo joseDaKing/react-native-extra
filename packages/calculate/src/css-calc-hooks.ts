@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { useCssUnits } from "./css-unit-hooks";
+import { useUnits } from "./css-unit-hooks";
 
 import { computeCssNumberValue} from "./css-number-value-hooks";
 
@@ -8,13 +8,13 @@ import calculate from "calc-units";
 
 
 
-export type  UseCssCalc = (expression: string) => number;
+export type  UseCalc = (expression: string) => number;
 
-export const useInitCssCalc = (): UseCssCalc => {
+export const useCalcFactory = (): UseCalc => {
     
-    const units = useCssUnits();
+    const units = useUnits();
 
-    const useCalc: UseCssCalc = (expression: string): number => {
+    const useCalc: UseCalc = (expression: string): number => {
 
         return calculate(expression, value => computeCssNumberValue(value, units));
     };
@@ -22,9 +22,9 @@ export const useInitCssCalc = (): UseCssCalc => {
     return useCalc;
 };
 
-export const useCssCalc: UseCssCalc = expression => {
+export const useCalc: UseCalc = expression => {
 
-    const calc = useInitCssCalc();
+    const calc = useCalcFactory();
 
     return useMemo(() => calc(expression), [ expression ]);
 };

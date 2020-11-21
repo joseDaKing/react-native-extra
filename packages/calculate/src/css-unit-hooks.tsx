@@ -6,55 +6,55 @@ import { useWindowDimensions } from "react-native";
 
 type Unit = () => number;
 
-const useCssVh: Unit = () => {
+const useVhUnit: Unit = () => {
 
     const { height } = useWindowDimensions();
 
     return height / 100;
 };
 
-const useCssVw: Unit = () => {
+const useVwUnit: Unit = () => {
 
     const { width } = useWindowDimensions();
 
     return width / 100;
 };
 
-const useCssVmax: Unit = () => {
+const useVmaxUnit: Unit = () => {
 
     const { height, width } = useWindowDimensions();
 
     return Math.max(width, height) / 100;
 };
 
-const useCssVmin: Unit = () => {
+const useVminUnit: Unit = () => {
 
     const { height, width } = useWindowDimensions();
 
     return Math.min(width, height) / 100;
 };
 
-const useCssMm: Unit = () => {
+const useMmUnit: Unit = () => {
 
     return 3.78;
 };
 
-const useCssCm: Unit = () => {
+const useCmUnit: Unit = () => {
 
     return 37.8;
 };
 
-const useCssIn: Unit = () => {
+const useInUnit: Unit = () => {
 
     return 96;
 };
 
-const useCssPt: Unit = () => {
+const usePtUnit: Unit = () => {
 
     return 1.33;
 };
 
-const useCssPc: Unit = () => {
+const usePcUnit: Unit = () => {
 
     return 1.33 * 12
 };
@@ -74,7 +74,7 @@ export const RemProvider: React.FC<RemProviderProps> = ({ children, value }) => 
     );
 };
 
-const useCssRem: Unit = () => {
+const useRemUnit: Unit = () => {
 
     const remValue = useContext(RemContext);
 
@@ -83,24 +83,24 @@ const useCssRem: Unit = () => {
 
 
 
-export type CssUnits = "rem" | "pt" | "pc" | "in" | "cm" | "mm" | "vmin" | "vmax" | "vh" | "vw";
+export type Units = "rem" | "pt" | "pc" | "in" | "cm" | "mm" | "vmin" | "vmax" | "vh" | "vw";
 
-export type CssUnitsObject = {
-    [Key in CssUnits]: number;
+export type UnitsObject = {
+    [Key in Units]: number;
 }
 
-export const useCssUnits = (): CssUnitsObject => {
+export const useUnits = (): UnitsObject => {
 
     return {
-        rem: useCssRem(),
-        pt: useCssPt(),
-        pc: useCssPc(),
-        in: useCssIn(),
-        cm: useCssCm(),
-        mm: useCssMm(),
-        vmin: useCssVmin(),
-        vmax: useCssVmax(),
-        vh: useCssVh(),
-        vw: useCssVw()
+        rem: useRemUnit(),
+        pt: usePtUnit(),
+        pc: usePcUnit(),
+        in: useInUnit(),
+        cm: useCmUnit(),
+        mm: useMmUnit(),
+        vmin: useVminUnit(),
+        vmax: useVmaxUnit(),
+        vh: useVhUnit(),
+        vw: useVwUnit()
     };
 };
