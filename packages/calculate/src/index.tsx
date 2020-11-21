@@ -3,15 +3,15 @@ import {
     UseCalc, 
     useCalcFactory
 }
-from "./css-calc-hooks";
+from "./calc-hooks";
 
 import { 
     useUnitValue, 
     useUnitValueFactory
 }
-from "./css-number-value-hooks";
+from "./unit-value-hooks";
 
-import { useUnits } from "./css-unit-hooks";
+import { useUnits } from "./unit-hooks";
 
 export {
     UseCalc,

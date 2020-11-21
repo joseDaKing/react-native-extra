@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 
-import { useUnits } from "./css-unit-hooks";
+import { useUnits } from "./unit-hooks";
 
-import { computeUnitValue} from "./css-number-value-hooks";
+import { computeUnitValue} from "./unit-value-hooks";
 
 import calculate from "calc-units";
 
