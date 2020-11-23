@@ -86,9 +86,8 @@ export function useStyleFactory<Type extends StyleType>(styleProps: StyleProps<T
 
     const calc = useCalcFactory();
 
-
     const createStyle: CreateStyle<Type> = useCallback(settings => {
-        
+
         const style = {} as Style<Type>;
 
         applyStyleProps(styleProps, style, mediaQuery, settings);
