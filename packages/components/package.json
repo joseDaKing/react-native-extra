@@ -1,0 +1,53 @@
+{
+  "publishConfig": {
+    "access": "public"
+  },
+  "name": "@react-native-extra/calculate",
+  "version": "0.1.0",
+  "description": "The library gives you extended react native componet with extended styleprops that makes it easier to implement ui or design",
+  "main": "./dest/index.js",
+  "types": "./dest/index.d.ts",
+  "scripts": {
+    "prepublish": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joseDaKing/react-native-extra.git"
+  },
+  "keywords": [
+    "html",
+    "css",
+    "scss",
+    "sass",
+    "react",
+    "react-native",
+    "javaScript",
+    "typeScript",
+    "css-units",
+    "css-calc",
+    "calculate",
+    "media-query",
+    "components",
+    "custom-components",
+    "extended",
+    "extended-components"
+  ],
+  "author": "Yousef Abdulkarim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joseDaKing/react-native-extra/issues"
+  },
+  "homepage": "https://github.com/joseDaKing/react-native-extra#readme",
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-native": "^0.63.3"
+  },
+  "devDependencies": {
+    "@types/react": "^16.14.1",
+    "@types/react-native": "^0.63.36",
+    "typescript": "^4.1.2"
+  },
+  "dependencies": {
+    "@react-native-extra/style-sheet": "^0.1.0"
+  }
+}
