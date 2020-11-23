@@ -1,12 +1,18 @@
 {
+<<<<<<< HEAD:packages/media-query/package.json
   "publishConfig": {
     "access": "public"
   },
   "name": "@react-native-extra/media-query",
   "version": "0.3.0",
   "description": "A library that makes it possible to use media queries in react native. The library has similar api react-responsive bu not exactly the same.",
+=======
+  "name": "@react-native-extra/style-sheet",
+  "version": "0.1.0",
+  "description": "A extended stylesheet with extra features",
+>>>>>>> style-sheet:packages/style-sheet/package.json
   "main": "./dest/index.js",
-  "types": "./dest/index.d.ts",
+  "types": "./src/index.ts",
   "scripts": {
     "prepublish": "tsc"
   },
@@ -15,18 +21,16 @@
     "url": "git+https://github.com/joseDaKing/react-native-extra.git"
   },
   "keywords": [
-    "html",
     "css",
-    "scss",
     "sass",
+    "scss",
+    "html",
     "react",
     "react-native",
-    "javaScript",
-    "typeScript",
-    "mediaQuery",
-    "media-query"
+    "style-sheet",
+    "extended-style-sheet"
   ],
-  "author": "Yousef Abdulkarim",
+  "author": "Yosuef Abdulkarim",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/joseDaKing/react-native-extra/issues"
@@ -37,12 +41,13 @@
     "react-native": "^0.63.3"
   },
   "devDependencies": {
-    "@types/css-mediaquery": "^0.1.0",
     "@types/react": "^16.9.56",
     "@types/react-native": "^0.63.33",
+    "ts-toolbelt": "^8.0.7",
     "typescript": "^4.1.1-rc"
   },
   "dependencies": {
-    "css-mediaquery": "^0.1.2"
+    "@react-native-extra/calculate": "^0.3.1",
+    "@react-native-extra/media-query": "^0.3.0"
   }
 }
