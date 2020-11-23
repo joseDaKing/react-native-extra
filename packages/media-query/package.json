@@ -3,7 +3,7 @@
     "access": "public"
   },
   "name": "@react-native-extra/media-query",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A library that makes it possible to use media queries in react native. The library has similar api react-responsive bu not exactly the same.",
   "main": "./dest/index.js",
   "types": "./dest/index.d.ts",
