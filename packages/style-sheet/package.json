@@ -6,7 +6,7 @@
   "version": "0.1.0",
   "description": "A extended stylesheet with extra features",
   "main": "./dest/index.js",
-  "types": "./src/index.ts",
+  "types": "./dest/index.d.ts",
   "scripts": {
     "prepublish": "tsc"
   },
