@@ -1,10 +1,20 @@
 import { 
     useStyleFactory,
-    StyleProps
+    StyleProps,
+    Style,
+    StyleType,
+    BaseStyle,
+    BaseStyleProps,
+    OrderBaseStyleProps
 }
 from "./use-style-factory";
 
 export {
     StyleProps,
-    useStyleFactory
+    useStyleFactory,
+    Style,
+    StyleType,
+    BaseStyle,
+    BaseStyleProps,
+    OrderBaseStyleProps
 };

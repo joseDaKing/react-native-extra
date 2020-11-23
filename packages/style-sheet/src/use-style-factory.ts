@@ -8,8 +8,7 @@ import {
     TextStyleIOS,
     ShadowStyleIOS,
     useWindowDimensions,
-    useColorScheme,
-    Platform
+    useColorScheme    
 }
 from "react-native";
 
@@ -44,13 +43,13 @@ export type BaseStyleProps<Style extends BaseStyle> = Omit<
     | "tint"
 > & OrderBaseStyleProps<Style>;
 
-type OrderBaseStyleProps<Style extends BaseStyle> = {
+export type OrderBaseStyleProps<Style extends BaseStyle> = {
     [Key in OrderSelector]?: BaseStyleProps<Style>;
 };
 
-type StyleType = "view" | "text" | "image";
+export type StyleType = "view" | "text" | "image";
 
-type Style<Type extends StyleType> = (
+export type Style<Type extends StyleType> = (
     Type extends "view" ? ViewStyle :
     Type extends "text" ? TextStyle :
     Type extends "image" ? ImageStyle
