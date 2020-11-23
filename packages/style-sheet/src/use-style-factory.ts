@@ -1,22 +1,33 @@
+import { useCallback } from "react";
+
 import { 
     ViewStyle,
     TextStyle,
     ImageStyle,
     TextStyleAndroid,
     TextStyleIOS,
-    ShadowStyleIOS
+    ShadowStyleIOS,
+    useWindowDimensions,
+    useColorScheme,
+    Platform
 }
 from "react-native";
 
 import { Object } from "ts-toolbelt";
 
-import { applyCalcValues } from "./apply-styles/apply-calc-values";
+import { applyCalcValues } from "./apply-calc-values";
 
-import { applyElevationStyles } from "./apply-styles/apply-elevation-styles";
+import { applyStyleProps } from "./apply-style-props";
 
-import { applyMediaQueryStyles } from "./apply-styles/apply-media-query-styles";
+import { 
+    useMediaQueryFactory,
+    usePrefersReducedMotionMediaQuery
+}
+from "@react-native-extra/media-query";
 
-import { applyOrderStyles } from "./apply-styles/apply-order-styles";
+import { useCalcFactory } from "@react-native-extra/calculate";
+
+import { OrderSelector } from "./apply-style-props";
 
 
 
@@ -29,16 +40,9 @@ export type BaseStyleProps<Style extends BaseStyle> = Omit<
     | keyof Omit<TextStyleAndroid, keyof ViewStyle>
     | "overlayColor"
     | "direction"
+    | "elevation"
+    | "tint"
 > & OrderBaseStyleProps<Style>;
-
-type OrderSelector = (
-    "&:last-child" 
-    | "&:first-child" 
-    | "&:nth-child(even)"
-    | "&:nth-child(odd)"
-    | "&:nth-last-child(even)"
-    | "&:nth-last-child(odd)"
-);
 
 type OrderBaseStyleProps<Style extends BaseStyle> = {
     [Key in OrderSelector]?: BaseStyleProps<Style>;
@@ -53,31 +57,47 @@ type Style<Type extends StyleType> = (
     : never
 );
 
-type StyleProps<Type extends StyleType> = BaseStyleProps<Style<Type>>;
+export type StyleProps<Type extends StyleType> = BaseStyleProps<Style<Type>>;
 
 export type CreateStyleSettings = {
-    index: number;
-    length: number;
+    index?: number;
+    length?: number;
 };
 
 type CreateStyle<Type extends StyleType> = (settings?: CreateStyleSettings) => Style<Type>;
 
 export function useStyleFactory<Type extends StyleType>(styleProps: StyleProps<Type>): CreateStyle<Type> {
 
-    const createStyle: CreateStyle<Type> = settings => {
+    const { height, width } = useWindowDimensions();
 
+    const colorScheme = useColorScheme();
+
+    const prefersReducedMotion = usePrefersReducedMotionMediaQuery("reduce");
+
+    const dependencyArray = [ 
+        height, 
+        width, 
+        colorScheme,
+        prefersReducedMotion
+    ] as const;
+
+
+    const mediaQuery = useMediaQueryFactory();
+
+    const calc = useCalcFactory();
+
+
+    const createStyle: CreateStyle<Type> = useCallback(settings => {
+        
         const style = {} as Style<Type>;
 
-        applyMediaQueryStyles(styleProps, style);
+        applyStyleProps(styleProps, style, mediaQuery, settings);
 
-        applyOrderStyles(styleProps, style, settings);
-
-        applyElevationStyles(style);
-
-        applyCalcValues(style,);
+        applyCalcValues(style, calc);
 
         return style;
-    };
+
+    }, dependencyArray);
 
     return createStyle;
 };

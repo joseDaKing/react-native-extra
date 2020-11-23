@@ -1,5 +1,10 @@
-import { useStyleFactory } from "./use-style-factory";
+import { 
+    useStyleFactory,
+    StyleProps
+}
+from "./use-style-factory";
 
 export {
+    StyleProps,
     useStyleFactory
 };
