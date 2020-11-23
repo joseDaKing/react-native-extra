@@ -3,7 +3,7 @@
     "access": "public"
   },
   "name": "@react-native-extra/style-sheet",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A extended stylesheet with extra features",
   "main": "./dest/index.js",
   "types": "./dest/index.d.ts",
