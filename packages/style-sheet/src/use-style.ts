@@ -124,11 +124,19 @@ function useHasAccessibilityInfoChanged(): boolean {
 
     const [state, setState] = useState(true);
 
-    AccessibilityInfo.addEventListener("change", setState);
+    AccessibilityInfo.addEventListener("invertColorsChanged", setState);
+
+    AccessibilityInfo.addEventListener("reduceMotionChanged", setState);
+
+    AccessibilityInfo.addEventListener("reduceTransparencyChanged", setState);
 
     useEffect(() => () => {
 
-        AccessibilityInfo.removeEventListener("change", setState);
+        AccessibilityInfo.removeEventListener("invertColorsChanged", setState);
+
+        AccessibilityInfo.removeEventListener("reduceMotionChanged", setState);
+
+        AccessibilityInfo.removeEventListener("reduceTransparencyChanged", setState);
 
     }, []);
 
