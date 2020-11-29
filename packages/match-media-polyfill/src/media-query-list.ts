@@ -149,7 +149,14 @@ export class MediaQueryList {
 
     private setMediaQueryResult(): void {
 
-        this.matches = mediaQuery.match(this.media, this.getMediaQueryMetadata());
+        try {
+            
+            this.matches = mediaQuery.match(this.media, this.getMediaQueryMetadata())
+        }
+        catch {
+            
+            this.matches = false;
+        };
     };
 
     private getMediaQueryMetadata(): MediaQueryMetadata {
