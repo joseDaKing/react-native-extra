@@ -3,7 +3,7 @@
     "access": "public"
   },
   "name": "@react-native-extra/media-query",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "The is library implements media query hook and components that works both on react native and react native web",
   "main": "./dest/index.js",
   "types": "./dest/index.d.ts",
@@ -38,7 +38,7 @@
     "react-native": "^0.63.3"
   },
   "dependencies": {
-    "@react-native-extra/match-media-polyfill": "^0.1.2"
+    "@react-native-extra/match-media-polyfill": "^0.1.3"
   },
   "devDependencies": {
     "@types/react": "^16.14.1",
