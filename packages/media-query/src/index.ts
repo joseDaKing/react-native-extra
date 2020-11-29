@@ -1,3 +1,5 @@
+import "@react-native-extra/match-media-polyfill"
+
 import { 
     mediaQueryComponetFromStringFactory,
     mediaQueryComponentFromContextFactory,
@@ -12,34 +14,14 @@ import {
     OnWebPlatform,
     OnDesktopPlatform,
     OnPrefersReducedMotion,
-    OnInvertedColors,
+    OnInvertedColors
 } 
 from "./media-query-components";
 
-import {
-    useMediaQueryFromContext,
-    useInvertedColorsMediaQuery,
-    useHeightMediaQuery,
-    useAspectRatioMediaQuery,
-    useMaxAspectRatioMediaQuery,
-    useMaxHeightMediaQuery,
-    useMaxWidthMediaQuery,
-    useWidthMediaQuery,
-    useMinWidthMediaQuery,
-    useMinHeightMediaQuery,
-    usePrefersColorSchemeMediaQuery,
-    useMinAspectRatioMediaQuery,
-    usePrefersReducedMotionMediaQuery,
-    useOrientationMediaQuery,
-    usePlatformMediaQuery,
-    useMediaQuery,
-    UseMediaQuery,
-    useMediaQueryFactory,
-    isValidMediaQueryString
-}
-from "./media-query-hooks";
+import { useMediaQuery } from "./use-media-query";
 
 export {
+    useMediaQuery,
     mediaQueryComponetFromStringFactory,
     mediaQueryComponentFromContextFactory,
     OnMediaQuery,
@@ -53,24 +35,5 @@ export {
     OnWebPlatform,
     OnDesktopPlatform,
     OnPrefersReducedMotion,
-    OnInvertedColors,
-    useMediaQueryFactory,
-    useMediaQuery,
-    UseMediaQuery,
-    useInvertedColorsMediaQuery,
-    useHeightMediaQuery,
-    useAspectRatioMediaQuery,
-    useMaxAspectRatioMediaQuery,
-    useMaxHeightMediaQuery,
-    useMaxWidthMediaQuery,
-    useWidthMediaQuery,
-    useMinWidthMediaQuery,
-    useMinHeightMediaQuery,
-    usePrefersColorSchemeMediaQuery,
-    useMinAspectRatioMediaQuery,
-    usePrefersReducedMotionMediaQuery,
-    useOrientationMediaQuery,
-    usePlatformMediaQuery,
-    useMediaQueryFromContext,
-    isValidMediaQueryString
+    OnInvertedColors
 }

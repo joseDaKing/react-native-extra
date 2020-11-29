@@ -2,9 +2,9 @@
   "publishConfig": {
     "access": "public"
   },
-  "name": "@react-native-extra/calculate",
-  "version": "0.3.1",
-  "description": "The library makes it possible to perform a calculation with css units (the supported units are vh, vw, vmax, vmin, rem, px, cm, mm, in, pt, pc)",
+  "name": "@react-native-extra/media-query",
+  "version": "0.4.0",
+  "description": "The is library implements media query hook and components that works both on react and react native",
   "main": "./dest/index.js",
   "types": "./dest/index.d.ts",
   "scripts": {
@@ -23,9 +23,9 @@
     "react-native",
     "javaScript",
     "typeScript",
-    "css-units",
-    "css-calc",
-    "calculate"
+    "media-query",
+    "use-media-query",
+    "media-query-component"
   ],
   "author": "Yousef Abdulkarim",
   "license": "MIT",
@@ -34,16 +34,13 @@
   },
   "homepage": "https://github.com/joseDaKing/react-native-extra#readme",
   "peerDependencies": {
-    "react": "^16.13.1",
-    "react-native": "^0.63.3"
+    "react": "^16.13.1"
   },
   "dependencies": {
-    "css-mediaquery": "^0.1.2"
+    "@react-native-extra/match-media-polyfill": "^0.1.1"
   },
   "devDependencies": {
-    "@types/css-mediaquery": "^0.1.0",
     "@types/react": "^16.14.1",
-    "@types/react-native": "^0.63.36",
     "typescript": "^4.1.2"
   }
 }
