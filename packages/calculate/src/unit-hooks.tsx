@@ -34,30 +34,7 @@ const useVminUnit: Unit = () => {
     return Math.min(width, height) / 100;
 };
 
-const useMmUnit: Unit = () => {
 
-    return 3.78;
-};
-
-const useCmUnit: Unit = () => {
-
-    return 37.8;
-};
-
-const useInUnit: Unit = () => {
-
-    return 96;
-};
-
-const usePtUnit: Unit = () => {
-
-    return 1.33;
-};
-
-const usePcUnit: Unit = () => {
-
-    return 1.33 * 12
-};
 
 const RemContext = createContext(16);
 
@@ -83,6 +60,18 @@ const useRemUnit: Unit = () => {
 
 
 
+const constantUnits = {
+    em: 16,
+    rem: 16,
+    cm: 96 / 2.54,
+    mm: 96 / 2.54 / 10,
+    in: 96,
+    pt: 72,
+    pc: 72 / 12,
+};
+
+
+
 export type Units = "rem" | "pt" | "pc" | "in" | "cm" | "mm" | "vmin" | "vmax" | "vh" | "vw";
 
 export type UnitsObject = {
@@ -92,12 +81,8 @@ export type UnitsObject = {
 export const useUnits = (): UnitsObject => {
 
     return {
+        ...constantUnits,
         rem: useRemUnit(),
-        pt: usePtUnit(),
-        pc: usePcUnit(),
-        in: useInUnit(),
-        cm: useCmUnit(),
-        mm: useMmUnit(),
         vmin: useVminUnit(),
         vmax: useVmaxUnit(),
         vh: useVhUnit(),
