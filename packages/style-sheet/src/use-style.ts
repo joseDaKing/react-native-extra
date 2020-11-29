@@ -1,5 +1,3 @@
-import { useCallback } from "react";
-
 import { 
     ViewStyle,
     TextStyle,
@@ -7,8 +5,6 @@ import {
     TextStyleAndroid,
     TextStyleIOS,
     ShadowStyleIOS,
-    useWindowDimensions,
-    useColorScheme    
 }
 from "react-native";
 
@@ -18,15 +14,20 @@ import { applyCalcValues } from "./apply-calc-values";
 
 import { applyStyleProps } from "./apply-style-props";
 
-import { 
-    useMediaQueryFactory,
-    usePrefersReducedMotionMediaQuery
-}
-from "@react-native-extra/media-query";
+import { useMediaQueryFactory } from "@react-native-extra/media-query";
 
 import { useCalcFactory } from "@react-native-extra/calculate";
 
 import { OrderSelector } from "./apply-style-props";
+
+import { useEffect, useMemo, useState } from "react";
+
+import {
+    useColorScheme,
+    useWindowDimensions,
+    AccessibilityInfo
+} 
+from "react-native";
 
 
 
@@ -65,27 +66,13 @@ export type CreateStyleSettings = {
 
 type CreateStyle<Type extends StyleType> = (settings?: CreateStyleSettings) => Style<Type>;
 
-export function useStyleFactory<Type extends StyleType>(styleProps: StyleProps<Type>): CreateStyle<Type> {
-
-    const { height, width } = useWindowDimensions();
-
-    const colorScheme = useColorScheme();
-
-    const prefersReducedMotion = usePrefersReducedMotionMediaQuery("reduce");
-
-    const dependencyArray = [ 
-        height, 
-        width, 
-        colorScheme,
-        prefersReducedMotion
-    ] as const;
-
+export function useStyleFactory<Type extends StyleType>(styleProps: StyleProps<Type>): CreateStyle<Type> {    
 
     const mediaQuery = useMediaQueryFactory();
 
     const calc = useCalcFactory();
 
-    const createStyle: CreateStyle<Type> = useCallback(settings => {
+    const createStyle: CreateStyle<Type> = settings => {
 
         const style = {} as Style<Type>;
 
@@ -94,8 +81,56 @@ export function useStyleFactory<Type extends StyleType>(styleProps: StyleProps<T
         applyCalcValues(style, calc);
 
         return style;
-
-    }, dependencyArray);
+    };
 
     return createStyle;
+};
+
+export function useStyle<Type extends StyleType>(styleProps: StyleProps<Type>, settings?: CreateStyleSettings): Style<Type> {
+
+    const mediaQuery = useMediaQueryFactory();
+
+    const calc = useCalcFactory();
+
+    const dependency = `${JSON.stringify(styleProps)}${useHasMediaQueryMetadataChanged()}`;
+
+    const style: Style<Type> = useMemo((): Style<Type> => {
+    
+        const style = {} as Style<Type>;
+
+        applyStyleProps(styleProps, style, mediaQuery, settings);
+
+        applyCalcValues(style, calc);
+
+        return style;
+
+    }, [ dependency ]);
+
+    return style;
+};
+
+function useHasMediaQueryMetadataChanged(): string {
+
+    const dimensions = useWindowDimensions();
+
+    const colorScheme = useColorScheme();
+
+    const hasAccessibilityInfoChanged = useHasAccessibilityInfoChanged();
+
+    return `${colorScheme}${hasAccessibilityInfoChanged}${JSON.stringify(dimensions)}`;
+};
+
+function useHasAccessibilityInfoChanged(): boolean {
+
+    const [state, setState] = useState(true);
+
+    AccessibilityInfo.addEventListener("change", setState);
+
+    useEffect(() => () => {
+
+        AccessibilityInfo.removeEventListener("change", setState);
+
+    }, []);
+
+    return state;
 };

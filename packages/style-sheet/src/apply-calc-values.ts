@@ -1,4 +1,4 @@
-import { BaseStyle } from "./use-style-factory";
+import { BaseStyle } from "./use-style";
 
 import { UseCalc } from "@react-native-extra/calculate";
 

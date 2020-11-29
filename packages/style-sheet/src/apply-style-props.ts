@@ -3,13 +3,9 @@ import {
     BaseStyleProps,
     CreateStyleSettings
 } 
-from "./use-style-factory";
+from "./use-style";
 
-import { 
-    UseMediaQuery, 
-    isValidMediaQueryString 
-}
-from "@react-native-extra/media-query";
+import { UseMediaQuery } from "@react-native-extra/media-query";
 
 
 
@@ -48,10 +44,8 @@ function shouldApplyNestedStyles(stylePropKey: string, mediaQuery: UseMediaQuery
     const stylePropKeyWithoutWhiteSpace = removeWhiteSpace(stylePropKey);
 
     return (
-        (
-            isValidMediaQueryString(stylePropKeyWithoutWhiteSpace) 
-            && mediaQuery(stylePropKeyWithoutWhiteSpace)
-        ) || (
+        mediaQuery(stylePropKeyWithoutWhiteSpace)
+        || (
             isValidOrderSelectorString(stylePropKeyWithoutWhiteSpace) 
             && isValidOrderSelector(stylePropKeyWithoutWhiteSpace, settings)
         )
