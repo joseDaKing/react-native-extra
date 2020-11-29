@@ -18,10 +18,17 @@ import {
 } 
 from "./media-query-components";
 
-import { useMediaQuery } from "./use-media-query";
+import { 
+    UseMediaQuery,
+    useMediaQuery,
+    useMediaQueryFactory
+}
+from "./use-media-query";
 
 export {
     useMediaQuery,
+    UseMediaQuery,
+    useMediaQueryFactory,
     mediaQueryComponetFromStringFactory,
     mediaQueryComponentFromContextFactory,
     OnMediaQuery,

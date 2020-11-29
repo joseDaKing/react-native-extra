@@ -1,21 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 
+export type UseMediaQuery = (query: string) => boolean;
 
-export function useMediaQuery(query: string): boolean {
+export const useMediaQueryFactory = (): UseMediaQuery => {
 
     const [state, setState] = useState(true);
 
-    const mediaQueryList = matchMedia(query);
+    return query => {
 
-    const listener = ({ matches }: any) => setState(matches);
+        const mediaQueryList = matchMedia(query);
 
-    mediaQueryList.addEventListener("change", listener);
+        const listener = ({ matches }: any) => setState(matches);
 
-    useEffect(() => {
+        mediaQueryList.addEventListener("change", listener);
+
+        useEffect(() => {
+            
+            mediaQueryList.removeEventListener("change", listener);
+        }, []);
         
-        mediaQueryList.removeEventListener("change", listener);
-    }, []);
+        return state;
+    };
+};
+
+export const useMediaQuery: UseMediaQuery = query => {
+
+    return useMemo((): boolean => {
     
-    return state;
+        return useMediaQueryFactory()(query)
+    
+    }, [ query ]);
 };
