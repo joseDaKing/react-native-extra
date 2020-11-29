@@ -50,6 +50,7 @@ export class MediaQueryList {
     onchange?: Listener;
 
 
+    
     constructor(media: string) {
 
         this.media = media;
@@ -61,7 +62,7 @@ export class MediaQueryList {
 
     addEventListener(type: "change", listener: Listener): void {
     
-        if (this.listeners.length === 0) {
+        if (this.getTotalAmountOfListeners() === 0) {
 
             this.mount();
         }
@@ -98,7 +99,7 @@ export class MediaQueryList {
                 this.listeners.splice(index, 1);
             }
 
-            if (this.listeners.length === 0) {
+            if (this.getTotalAmountOfListeners() === 0) {
             
                 this.unmount();
             }
@@ -116,6 +117,11 @@ export class MediaQueryList {
         AccessibilityInfo.removeEventListener("reduceMotionChanged", this.excuteListeners);
 
         Appearance.removeChangeListener(this.excuteListeners);
+    };
+
+    private getTotalAmountOfListeners(): number {
+
+        return this.listeners.length + (this.onchange ? 1 : 0);
     };
 
 
