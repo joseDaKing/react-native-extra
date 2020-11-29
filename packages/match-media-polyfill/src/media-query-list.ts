@@ -29,9 +29,9 @@ type MediaQueryMetadata = {
 
 type EventListenerMethods = "addEventListener" | "removeEventListener" | "addListener" | "removeListener";
 
-type MediaQueryListListenerEvent = Omit<MediaQueryList, EventListenerMethods>;
+type ListenerEvent = Omit<MediaQueryList, EventListenerMethods>;
 
-type MediaQueryListListener = (mediaQueryListListenerEvent: MediaQueryListListenerEvent) => any | void;
+type Listener = (ListenerEvent: ListenerEvent) => any | void;
 
 const isReduceTransparencyEnabledSync = synchnorizedPromise(AccessibilityInfo.isReduceTransparencyEnabled);
 
@@ -41,17 +41,39 @@ const isInvertColorsEnabledSync = synchnorizedPromise(AccessibilityInfo.isInvert
 
 export class MediaQueryList {
     
-    private mediaQueryListListeners: MediaQueryListListener[] = [];
+    private listeners: Listener[] = [];
 
     private media: string;
     
     public matches: boolean = true;
 
+    onchange?: Listener;
+
+
+    
     constructor(media: string) {
 
         this.media = media;
 
         this.setMediaQueryResult();
+    };
+
+
+
+    addEventListener(type: "change", listener: Listener): void {
+    
+        if (this.getTotalAmountOfListeners() === 0) {
+
+            this.mount();
+        }
+
+        if (type === "change") {
+
+            this.listeners.push(listener);
+        }
+    };
+
+    private mount(): void {
 
         Dimensions.addEventListener("change", this.excuteListeners);
 
@@ -64,35 +86,57 @@ export class MediaQueryList {
         Appearance.addChangeListener(this.excuteListeners);
     };
 
-    onchange?: MediaQueryListListener;
 
-    addEventListener(type: "change", listener: MediaQueryListListener): void {
     
-        if (type === "change") {
+    removeEventListener(type: "change", listenerToFind: Listener): void {
 
-            this.mediaQueryListListeners.push(listener);
-        }
-    };
-    
-    removeEventListener(type: "change", listener: MediaQueryListListener): void {
+        if (type === "change" && this.listeners.length !== 0) {
 
-        if (type === "change") {
+            const index = this.listeners.findIndex(listener => listener === listenerToFind);
+        
+            if (index !== -1) {
 
-            const index = this.mediaQueryListListeners.indexOf(listener);
+                this.listeners.splice(index, 1);
+            }
+
+            if (this.getTotalAmountOfListeners() === 0) {
             
-            if (index !== -1) this.mediaQueryListListeners.splice(index, 1);
+                this.unmount();
+            }
         }
     };
 
-    addListener(listener: MediaQueryListListener): void {
+    private unmount(): void {
+
+        Dimensions.removeEventListener("change", this.excuteListeners);
+
+        AccessibilityInfo.removeEventListener("reduceTransparencyChanged", this.excuteListeners);
+
+        AccessibilityInfo.removeEventListener("invertColorsChanged", this.excuteListeners);
+
+        AccessibilityInfo.removeEventListener("reduceMotionChanged", this.excuteListeners);
+
+        Appearance.removeChangeListener(this.excuteListeners);
+    };
+
+    private getTotalAmountOfListeners(): number {
+
+        return this.listeners.length + (this.onchange ? 1 : 0);
+    };
+
+
+
+    addListener(listener: Listener): void {
     
         this.addEventListener("change", listener);
     };
     
-    removeListener(listener: MediaQueryListListener): void {
+    removeListener(listener: Listener): void {
 
         this.removeEventListener("change", listener);
     };
+
+    
 
     private excuteListeners(): void {
 
@@ -100,12 +144,19 @@ export class MediaQueryList {
 
         this.onchange && this.onchange(this);
         
-        this.mediaQueryListListeners.forEach(mediaQueryListListener => mediaQueryListListener(this));
+        this.listeners.forEach(Listener => Listener(this));
     };
 
     private setMediaQueryResult(): void {
 
-        this.matches = mediaQuery.match(this.media, this.getMediaQueryMetadata());
+        try {
+            
+            this.matches = mediaQuery.match(this.media, this.getMediaQueryMetadata())
+        }
+        catch {
+            
+            this.matches = false;
+        };
     };
 
     private getMediaQueryMetadata(): MediaQueryMetadata {

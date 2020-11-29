@@ -1,8 +1,6 @@
 import React, { Context, useContext } from "react";
 
-import { AspectRatio } from "./types"
-
-import { useMediaQuery } from "./media-query-hooks";
+import { useMediaQuery } from "./use-media-query";
 
 
 
@@ -69,120 +67,23 @@ export const OnLandscape = mediaQueryComponetFromStringFactory("(orientation: la
 
 export const OnPortrait = mediaQueryComponetFromStringFactory("(orientation: portrait)");
 
-export const OnPrefersReducedMotion = mediaQueryComponetFromStringFactory("prefers-reduced-motion: reduced");
+export const OnPrefersReducedMotion = mediaQueryComponetFromStringFactory("(prefers-reduced-motion: reduced)");
 
-export const OnInvertedColors = mediaQueryComponetFromStringFactory("inverted-colors: inverted");
+export const OnInvertedColors = mediaQueryComponetFromStringFactory("(inverted-colors: inverted)");
 
 
 
 type OnMediaQueryProps = {
-    width?: number;
-    minWidth?: number;
-    maxWidth?: number;
-    height?: number;
-    minHeight?: number;
-    maxHeight?: number;
-    aspectRatio?: AspectRatio;
-    minAspectRatio?: AspectRatio;
-    maxAspectRatio?: AspectRatio;
-    invertedColors?: "none" | "inverted";
-    prefersReducedMotion?: "reduce" | "no-preference"; 
-    platform?: "ios" | "android" | "mobile" | "web";
-    orentation?: "portrait" | "landscape";
-    prefersColorScheme?: "dark" | "light";
+    query: string;
 }
 
 export const OnMediaQuery: React.FC<OnMediaQueryProps> = props => {
 
-    const { children, ...mediaQueries } = props;
-
-    const mediaQueryString = createMediaQueryStringFromProps(mediaQueries);
-
-    const isMatching = useMediaQuery(mediaQueryString);
+    const isMatching = useMediaQuery(props.query);
 
     return (
         <>
-            {isMatching && children}
+            {isMatching && props.children}
         </>
     );
-};
-
-type MediaQueryStrings = {
-    [Key in keyof OnMediaQueryProps]: string;
-}
-
-function createMediaQueryStringFromProps(props: OnMediaQueryProps): string {
-
-    const mediaQueryStrings: MediaQueryStrings = {};
-
-    applyAspectRatioMediaQueryStrings(mediaQueryStrings, props);
-
-    applyHeightMediaQueryStrings(mediaQueryStrings, props);
-
-    applyWidthMediaQueryStrings(mediaQueryStrings, props);
-
-    const completeMediaQueryString = Object.values(mediaQueryStrings).join(" and ").trim();
-
-    return completeMediaQueryString;
-};
-
-function applyHeightMediaQueryStrings(mediaQueryStrings: MediaQueryStrings, props: OnMediaQueryProps): void {
-
-    if (props.height) {
-
-        mediaQueryStrings.height = `(height: ${props.height}px)`;
-    }
-
-    if (props.minHeight) {
-
-        mediaQueryStrings.minHeight = `(min-height: ${props.minHeight}px)`;
-    }
-
-    if (props.maxHeight) {
-
-        mediaQueryStrings.maxHeight = `(max-height: ${props.maxHeight}px)`;
-    }
-};
-
-function applyWidthMediaQueryStrings(mediaQueryStrings: MediaQueryStrings, props: OnMediaQueryProps): void {
-
-    if (props.width) {
-
-        mediaQueryStrings.width = `(width: ${props.width}px)`;
-    }
-
-    if (props.minWidth) {
-
-        mediaQueryStrings.minWidth = `(min-width: ${props.minWidth}px)`;
-    }
-
-    if (props.maxWidth) {
-
-        mediaQueryStrings.maxWidth = `(max-width: ${props.maxWidth}px)`;
-    }
-};
-
-function applyAspectRatioMediaQueryStrings(mediaQueryStrings: MediaQueryStrings, props: OnMediaQueryProps): void {
-
-    if (props.aspectRatio) {
-
-        mediaQueryStrings.aspectRatio = `(aspect-ratio: ${getAspectRatioInString(props.aspectRatio)})`;
-    };
-
-    if (props.maxAspectRatio) {
-
-        mediaQueryStrings.aspectRatio = `(aspect-ratio: ${getAspectRatioInString(props.maxAspectRatio)})`;
-    }
-
-    if (props.minAspectRatio) {
-
-        mediaQueryStrings.aspectRatio = `(aspect-ratio: ${getAspectRatioInString(props.minAspectRatio)})`;
-    }
-};
-
-function getAspectRatioInString(aspectRatio: AspectRatio): string {
-
-    const [widthRatio, heightRatio] = aspectRatio;
-
-    return `${widthRatio}/${heightRatio}`;
 };
