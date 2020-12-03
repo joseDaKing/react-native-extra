@@ -2,11 +2,7 @@ import {
     useStyleFactory,
     useStyle,
     StyleProps,
-    Style,
-    StyleType,
-    BaseStyle,
-    BaseStyleProps,
-    OrderBaseStyleProps
+    StyleType
 }
 from "./use-style";
 
@@ -14,9 +10,5 @@ export {
     StyleProps,
     useStyleFactory,
     useStyle,
-    Style,
-    StyleType,
-    BaseStyle,
-    BaseStyleProps,
-    OrderBaseStyleProps
+    StyleType
 };

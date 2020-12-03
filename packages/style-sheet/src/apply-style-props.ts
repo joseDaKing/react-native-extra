@@ -93,34 +93,26 @@ function isValidOrderSelector(selector: string, settings?: CreateStyleSettings):
 
         if (!isValidOrderSelector) break;
 
+        let isValidSpecificOrderSelector: boolean;
+
         if (orderSelector === "only-child") {
 
-            isValidOrderSelector = (
-                isValidOrderSelector  
-                && isValidOnlyChildSelector(settings)
-            );
+            isValidSpecificOrderSelector = isValidOnlyChildSelector(settings);
         } 
         else if (orderSelector === "first-child") {
-
-            isValidOrderSelector = (
-                isValidOrderSelector  
-                && isValidFirstChildSelector(settings)
-            );
+            
+            isValidSpecificOrderSelector = isValidFirstChildSelector(settings);
         }
         else if (orderSelector === "last-child") {
 
-            isValidOrderSelector = (
-                isValidOrderSelector  
-                && isValidLastChildSelector(settings)
-            );
+            isValidSpecificOrderSelector = isValidLastChildSelector(settings);
         }
         else {
 
-            isValidOrderSelector = (
-                isValidOrderSelector
-                && isValidNthChildSelector(selector, settings)
-            );
+            isValidSpecificOrderSelector = isValidNthChildSelector(selector, settings)
         }
+
+        isValidOrderSelector = isValidOrderSelector && isValidSpecificOrderSelector;
     }
 
     return true;
