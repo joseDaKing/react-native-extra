@@ -5,19 +5,6 @@ import {
     TextStyleAndroid,
     TextStyleIOS,
     ShadowStyleIOS,
-    PerpectiveTransform,
-    RotateTransform,
-    RotateXTransform,
-    RotateYTransform,
-    RotateZTransform,
-    ScaleTransform,
-    ScaleXTransform,
-    ScaleYTransform,
-    TranslateXTransform,
-    TranslateYTransform,
-    SkewXTransform,
-    SkewYTransform,
-    MatrixTransform,
 }
 from "react-native";
 
