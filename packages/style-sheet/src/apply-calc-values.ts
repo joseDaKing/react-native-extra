@@ -11,7 +11,7 @@ export function applyCalcValues(style: BaseStyle, calc: UseCalc): void {
         const styleKey = key as keyof typeof style;
 
         const styleValue = style[styleKey]
-
+        
         if (typeof styleValue === "string") {
             
             try {
@@ -21,6 +21,3 @@ export function applyCalcValues(style: BaseStyle, calc: UseCalc): void {
         }
     }
 };
-
-
-

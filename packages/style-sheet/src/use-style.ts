@@ -5,6 +5,19 @@ import {
     TextStyleAndroid,
     TextStyleIOS,
     ShadowStyleIOS,
+    PerpectiveTransform,
+    RotateTransform,
+    RotateXTransform,
+    RotateYTransform,
+    RotateZTransform,
+    ScaleTransform,
+    ScaleXTransform,
+    ScaleYTransform,
+    TranslateXTransform,
+    TranslateYTransform,
+    SkewXTransform,
+    SkewYTransform,
+    MatrixTransform,
 }
 from "react-native";
 
@@ -31,26 +44,65 @@ from "react-native";
 
 
 
-export type BaseStyle = Object.Merge<Object.Merge<ViewStyle, ImageStyle>, TextStyle>;
+export type BaseStyle = (
+    Object.Merge<
+        Object.Merge<
+            ViewStyle, 
+            ImageStyle
+        >, 
+        TextStyle
+    >
+);
 
-export type BaseStyleProps<Style extends BaseStyle> = Omit<
-    Style, 
-    keyof ShadowStyleIOS
-    | keyof Omit<TextStyleIOS, keyof ViewStyle>
-    | keyof Omit<TextStyleAndroid, keyof ViewStyle>
+type PropsToRemove = (
     | "overlayColor"
     | "direction"
     | "elevation"
     | "tint"
-> & OrderBaseStyleProps<Style>;
+    | "transform"
+    | "transformMatrix"
+    | "translateX"
+    | "translateY"
+);
 
-export type OrderBaseStyleProps<Style extends BaseStyle> = {
+type TransformStyleProps = {
+    transform?: {
+        perspective: number | string;
+        rotate: string;
+        rotateX: string;
+        rotateY: string;
+        rotateZ: string;
+        scale: number;
+        scaleX: number;
+        scaleY: number;
+        translateX: number | string;
+        translateY: number | string;
+        skewX: string;
+        skewY: string;
+    }
+};
+
+export type BaseStyleProps<Style extends BaseStyle> = (
+    Object.Merge<
+        Omit<
+            Style, 
+            keyof ShadowStyleIOS
+            | keyof Omit<TextStyleIOS, keyof ViewStyle>
+            | keyof Omit<TextStyleAndroid, keyof ViewStyle>
+            | PropsToRemove
+        >,
+        
+        OrderBaseStyleProps<Style>
+    >
+);
+
+type OrderBaseStyleProps<Style extends BaseStyle> = {
     [Key in OrderSelector]?: BaseStyleProps<Style>;
 };
 
 export type StyleType = "view" | "text" | "image";
 
-export type Style<Type extends StyleType> = (
+type Style<Type extends StyleType> = (
     Type extends "view" ? ViewStyle :
     Type extends "text" ? TextStyle :
     Type extends "image" ? ImageStyle
@@ -65,6 +117,8 @@ export type CreateStyleSettings = {
 };
 
 type CreateStyle<Type extends StyleType> = (settings?: CreateStyleSettings) => Style<Type>;
+
+
 
 export function useStyleFactory<Type extends StyleType>(styleProps: StyleProps<Type>): CreateStyle<Type> {    
 
@@ -85,6 +139,8 @@ export function useStyleFactory<Type extends StyleType>(styleProps: StyleProps<T
 
     return createStyle;
 };
+
+
 
 export function useStyle<Type extends StyleType>(styleProps: StyleProps<Type>, settings?: CreateStyleSettings): Style<Type> {
 
@@ -108,6 +164,8 @@ export function useStyle<Type extends StyleType>(styleProps: StyleProps<Type>, s
 
     return style;
 };
+
+
 
 function useHasMediaQueryMetadataChanged(): string {
 
