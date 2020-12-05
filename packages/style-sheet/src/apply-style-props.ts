@@ -1,11 +1,14 @@
 import {
     BaseStyle,
     BaseStyleProps,
-    CreateStyleSettings
+    CreateStyleSettings,
+    TransformStyleProps
 } 
 from "./use-style";
 
 import { UseMediaQuery } from "@react-native-extra/media-query";
+import { TransformsStyle } from "react-native";
+import { transform } from "@babel/core";
 
 
 
@@ -22,9 +25,14 @@ export function applyStyleProps(styleProps: BaseStyleProps<BaseStyle>, style: Ba
 
     for (const key in styleProps) {
 
-        const stylePropKey = key as keyof typeof styleProps;
+        const stylePropKey = key as keyof BaseStyleProps<BaseStyle>;
 
         const stylePropValue = styleProps[stylePropKey];
+
+        if (shouldApplyTransformStyleProps(stylePropKey, stylePropValue)) {
+            
+            applyTransformStyleProps(style, stylePropValue as TransformStyleProps["transform"]);
+        }
         
         if (shouldApplyNestedStyles(stylePropKey, mediaQuery, settings)) {
 
@@ -34,6 +42,39 @@ export function applyStyleProps(styleProps: BaseStyleProps<BaseStyle>, style: Ba
 
             style[stylePropKey as keyof BaseStyle] = stylePropValue as any;
         }
+    }
+};
+
+
+function shouldApplyTransformStyleProps(stylePropKey: string, stylePropValue: any): boolean {
+
+    return stylePropKey === "transform" && typeof stylePropValue === "object";
+};
+
+
+function applyTransformStyleProps(style: BaseStyle, transformStyleProp: TransformStyleProps["transform"]): void {
+
+    const transforms: TransformsStyle["transform"] = [];
+
+    for (const key in transformStyleProp) {
+
+        const transformStylePropKey = key as keyof typeof transformStyleProp;
+
+        const transformStyleProps = transformStyleProp[transformStylePropKey];
+
+        if (transformStyleProps) {
+
+            const transform = {
+                [transformStylePropKey]: transformStyleProps 
+            } as any;
+
+            transforms.push(transform);
+        }
+    }
+
+    if (transforms.length !== 0) {
+
+        style["transform"] = transforms;
     }
 };
 
