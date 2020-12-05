@@ -41,6 +41,24 @@ export type BaseStyle = (
     >
 );
 
+export type TransformStyleProps = {
+    transform?: {
+        perspective?: number | string;
+        rotate?: string;
+        rotateX?: string;
+        rotateY?: string;
+        rotateZ?: string;
+        scale?: number;
+        scaleX?: number;
+        scaleY?: number;
+        translateX?: number | string;
+        translateY?: number | string;
+        skewX?: string;
+        skewY?: string;
+        matrix?: number[];
+    }
+};
+
 type PropsToRemove = (
     | "overlayColor"
     | "direction"
@@ -52,23 +70,6 @@ type PropsToRemove = (
     | "translateY"
 );
 
-type TransformStyleProps = {
-    transform?: {
-        perspective: number | string;
-        rotate: string;
-        rotateX: string;
-        rotateY: string;
-        rotateZ: string;
-        scale: number;
-        scaleX: number;
-        scaleY: number;
-        translateX: number | string;
-        translateY: number | string;
-        skewX: string;
-        skewY: string;
-    }
-};
-
 export type BaseStyleProps<Style extends BaseStyle> = (
     Object.Merge<
         Omit<
@@ -78,9 +79,8 @@ export type BaseStyleProps<Style extends BaseStyle> = (
             | keyof Omit<TextStyleAndroid, keyof ViewStyle>
             | PropsToRemove
         >,
-        
         OrderBaseStyleProps<Style>
-    >
+    > & TransformStyleProps
 );
 
 type OrderBaseStyleProps<Style extends BaseStyle> = {
@@ -165,25 +165,37 @@ function useHasMediaQueryMetadataChanged(): string {
     return `${colorScheme}${hasAccessibilityInfoChanged}${JSON.stringify(dimensions)}`;
 };
 
-function useHasAccessibilityInfoChanged(): boolean {
+function useHasAccessibilityInfoChanged(): string {
 
-    const [state, setState] = useState(true);
+    const [hasInvertedColorsChanged, setHasInvertColorsChanged] = useState(true);
 
-    AccessibilityInfo.addEventListener("invertColorsChanged", setState);
+    AccessibilityInfo.addEventListener("invertColorsChanged", setHasInvertColorsChanged);
 
-    AccessibilityInfo.addEventListener("reduceMotionChanged", setState);
 
-    AccessibilityInfo.addEventListener("reduceTransparencyChanged", setState);
+    const [hasReducedMotionChanged, setHasReducedMotionChanged] = useState(true);
+
+    AccessibilityInfo.addEventListener("reduceMotionChanged", setHasReducedMotionChanged);
+
+
+    const [hasReducedTransparencyChanged, setHasReducedTransparencyChanged] = useState(true);
+
+    AccessibilityInfo.addEventListener("reduceTransparencyChanged", setHasReducedTransparencyChanged);
+
 
     useEffect(() => () => {
 
-        AccessibilityInfo.removeEventListener("invertColorsChanged", setState);
+        AccessibilityInfo.removeEventListener("invertColorsChanged", setHasInvertColorsChanged);
 
-        AccessibilityInfo.removeEventListener("reduceMotionChanged", setState);
+        AccessibilityInfo.removeEventListener("reduceMotionChanged", setHasReducedMotionChanged);
 
-        AccessibilityInfo.removeEventListener("reduceTransparencyChanged", setState);
+        AccessibilityInfo.removeEventListener("reduceTransparencyChanged", setHasReducedTransparencyChanged);
 
     }, []);
 
-    return state;
+    return `${hasInvertedColorsChanged}${hasReducedMotionChanged}${hasReducedTransparencyChanged}`;
 };
+
+
+useStyleFactory({
+    transform: {}
+})
