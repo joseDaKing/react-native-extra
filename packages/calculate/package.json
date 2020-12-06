@@ -3,7 +3,7 @@
     "access": "public"
   },
   "name": "@react-native-extra/calculate",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "The library makes it possible to perform a calculation with css units (the supported units are vh, vw, vmax, vmin, rem, px, cm, mm, in, pt, pc)",
   "main": "./dest/index.js",
   "types": "./dest/index.d.ts",

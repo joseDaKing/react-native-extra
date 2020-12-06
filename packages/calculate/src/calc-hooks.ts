@@ -6,6 +6,8 @@ import { computeUnitValue} from "./unit-value-hooks";
 
 import calculate from "calc-units";
 
+import { computeRotationValue } from "./rotation-value-hooks";
+
 
 
 export type  UseCalc = (expression: string) => number;
@@ -27,4 +29,23 @@ export const useCalc: UseCalc = expression => {
     const calc = useCalcFactory();
 
     return useMemo(() => calc(expression), [ expression ]);
+};
+
+
+
+export const useRotationCalcFactory = (): UseCalc => {
+
+    const useCalc: UseCalc = (expression: string): number => {
+
+        return calculate(expression, value => computeRotationValue(value));
+    };
+
+    return useCalc;
+};
+
+export const useRotationCalc: UseCalc = expression => {
+
+    const rotationCalc = useRotationCalcFactory();
+
+    return useMemo(() => rotationCalc(expression), [ expression ]);
 };

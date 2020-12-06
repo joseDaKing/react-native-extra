@@ -68,11 +68,12 @@ const constantUnits = {
     in: 96,
     pt: 72,
     pc: 72 / 12,
+    px: 1
 };
 
 
 
-export type Units = "rem" | "pt" | "pc" | "in" | "cm" | "mm" | "vmin" | "vmax" | "vh" | "vw";
+export type Units = "rem" | "pt" | "pc" | "in" | "cm" | "mm" | "vmin" | "vmax" | "vh" | "vw" | "px";
 
 export type UnitsObject = {
     [Key in Units]: number;
@@ -89,3 +90,18 @@ export const useUnits = (): UnitsObject => {
         vw: useVwUnit()
     };
 };
+
+
+
+export type RotationUnits = "deg" | "rad" | "turn" | "grad";
+
+export type RotationUnitsObject = {
+    [Key in RotationUnits]: number;
+}
+
+export const constantRotationUnits: RotationUnitsObject = {
+    deg: 1,
+    turn: 360,
+    rad: 180 / Math.PI,
+    grad: 1 / 400 * 360
+}
