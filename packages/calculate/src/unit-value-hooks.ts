@@ -7,6 +7,8 @@ import {
 }
 from "./unit-hooks";
 
+import { createUnitValidator } from "./validate-unit";
+
 
 
 export const useUnitValueFactory = () => {
@@ -30,54 +32,30 @@ export const useUnitValue = (value: string): number => {
 
 
 
+const isUnitValueRegex = /^(-)?\d+(vh|vw|vmax|vmin|mm|cm|in|pt|pc|rem|px)$/;
+
+const validateUnitValue = createUnitValidator(isUnitValueRegex);
+
 export function computeUnitValue(value: string, units: UnitsObject): number {
 
-    validateUnit(value);
+    validateUnitValue(value);
 
     const [factor, unit] = extractUnitValue(value);
 
     let pixels: number;
 
-    if (unit === "px") {
+    const unitInPixels = units[unit];
 
-        pixels = factor;
-    }
-    else {
-
-        const unitInPixels = units[unit];
-
-        pixels = unitInPixels * factor;
-    }
+    pixels = unitInPixels * factor;
 
     return pixels;
 };
 
+
+
 const extractUnitValueRegex = /(?=(vh|vw|vmax|vmin|mm|cm|in|pt|pc|rem|px))/;
 
-function extractUnitValue(value: string): [number, Units|"px"] {
+function extractUnitValue(value: string): [number, Units] {
 
     return value.split(extractUnitValueRegex) as [number, Units|"px"];
-};
-
-
-
-const isUnitValueRegex = /^\d+(vh|vw|vmax|vmin|mm|cm|in|pt|pc|rem|px)$/;
-
-const hasUnvalidUnitValue = /^\d+([A-Za-z]+)$/;
-
-const extractUnvalidUnitValueRegex = /(?=[A-Za-z]+)/;
-
-function validateUnit(value: string): void {
-
-    if (!isUnitValueRegex.test(value)) {
-
-        if (hasUnvalidUnitValue.test(value)) {
-
-            const [, unit] = value.split(extractUnvalidUnitValueRegex);
-
-            throw new Error(`Unsported unit type ${unit} in ${value}`);
-        }
-
-        throw new Error(`Unable to parse ${value}`);
-    }
 };

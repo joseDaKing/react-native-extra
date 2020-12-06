@@ -1,7 +1,9 @@
 import { 
-    useCalc, 
     UseCalc, 
-    useCalcFactory
+    useCalc, 
+    useCalcFactory,
+    useRotationCalc,
+    useRotationCalcFactory
 }
 from "./calc-hooks";
 
@@ -11,6 +13,12 @@ import {
 }
 from "./unit-value-hooks";
 
+import {
+    useRotationValue,
+    useRotationValueFactory
+}
+from "./rotation-value-hooks";
+
 import { useUnits } from "./unit-hooks";
 
 export {
@@ -19,5 +27,9 @@ export {
     useCalcFactory,
     useUnits,
     useUnitValue, 
-    useUnitValueFactory
+    useUnitValueFactory,
+    useRotationValue,
+    useRotationValueFactory,
+    useRotationCalc,
+    useRotationCalcFactory
 }
