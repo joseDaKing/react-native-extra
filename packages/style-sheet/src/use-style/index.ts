@@ -16,7 +16,11 @@ import { applyStyleProps } from "./apply-style-props";
 
 import { useMediaQueryFactory } from "@react-native-extra/media-query";
 
-import { useCalcFactory } from "@react-native-extra/calculate";
+import { 
+    useCalcFactory, 
+    useRotationCalcFactory 
+} 
+from "@react-native-extra/calculate";
 
 import { OrderSelector } from "./apply-style-props";
 
@@ -113,13 +117,15 @@ export function useStyleFactory<Type extends StyleType>(styleProps: StyleProps<T
 
     const calc = useCalcFactory();
 
+    const rotationCalc = useRotationCalcFactory();
+
     const createStyle: CreateStyle<Type> = settings => {
 
         const style = {} as Style<Type>;
 
         applyStyleProps(styleProps, style, mediaQuery, settings);
 
-        applyCalcValues(style, calc);
+        applyCalcValues(style, calc, rotationCalc);
 
         return style;
     };
@@ -135,6 +141,8 @@ export function useStyle<Type extends StyleType>(styleProps: StyleProps<Type>, s
 
     const calc = useCalcFactory();
 
+    const rotationCalc = useRotationCalcFactory();
+
     const dependency = `${JSON.stringify(styleProps)}${useHasMediaQueryMetadataChanged()}`;
 
     const style: Style<Type> = useMemo((): Style<Type> => {
@@ -143,7 +151,7 @@ export function useStyle<Type extends StyleType>(styleProps: StyleProps<Type>, s
 
         applyStyleProps(styleProps, style, mediaQuery, settings);
 
-        applyCalcValues(style, calc);
+        applyCalcValues(style, calc, rotationCalc);
 
         return style;
 
@@ -194,8 +202,3 @@ function useHasAccessibilityInfoChanged(): string {
 
     return `${hasInvertedColorsChanged}${hasReducedMotionChanged}${hasReducedTransparencyChanged}`;
 };
-
-
-useStyleFactory({
-    transform: {}
-})

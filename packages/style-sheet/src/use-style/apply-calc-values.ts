@@ -1,12 +1,14 @@
-import { BaseStyle } from "./use-style";
+import { BaseStyle } from "./index";
 
 import { UseCalc } from "@react-native-extra/calculate";
 
 import { TransformsStyle } from "react-native";
 
+import { UseRotationCalc } from "@react-native-extra/calculate/dest/calc-hooks";
 
 
-export function applyCalcValues(style: BaseStyle, calc: UseCalc): void {
+
+export function applyCalcValues(style: BaseStyle, calc: UseCalc, rotationCalc: UseRotationCalc): void {
 
     for (const key in style) {
 
@@ -20,7 +22,7 @@ export function applyCalcValues(style: BaseStyle, calc: UseCalc): void {
 
             if (transformStyleArray) {
 
-                applyCalcValuesForTransforms(transformStyleArray, calc);
+                applyCalcValuesForTransforms(transformStyleArray, calc, rotationCalc);
             }
         }
         else if (typeof styleValue === "string") {
@@ -36,7 +38,7 @@ export function applyCalcValues(style: BaseStyle, calc: UseCalc): void {
 
 type TransformArray = Exclude<TransformsStyle["transform"], undefined>;
 
-function applyCalcValuesForTransforms(transformStyleArray: TransformArray, calc: UseCalc): void {
+function applyCalcValuesForTransforms(transformStyleArray: TransformArray, calc: UseCalc, rotationCalc: UseRotationCalc): void {
 
     for (const transformStyle of transformStyleArray) {
 
@@ -54,7 +56,8 @@ function applyCalcValuesForTransforms(transformStyleArray: TransformArray, calc:
             );
 
             if (isRotation) {
-                
+             
+                (transformStyle as any)[transformStylePropKey] = rotationCalc(transformStylePropValue);
             }
 
 
