@@ -28,7 +28,12 @@ export const useCalc: UseCalc = expression => {
 
     const calc = useCalcFactory();
 
-    return useMemo(() => calc(expression), [ expression ]);
+    const units = useUnits();
+    
+    return useMemo(() => calc(expression), [ 
+        expression, 
+        ...Object.values(units)
+    ]);
 };
 
 
