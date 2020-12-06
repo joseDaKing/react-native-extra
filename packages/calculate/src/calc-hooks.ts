@@ -18,7 +18,7 @@ export const useCalcFactory = (): UseCalc => {
 
     const useCalc: UseCalc = (expression: string): number => {
 
-        return calculate(expression, value => computeUnitValue(value, units));
+        return calculate(`calc(${expression})`, value => computeUnitValue(value, units));
     };
 
     return useCalc;
@@ -42,7 +42,7 @@ export const useRotationCalcFactory = (): UseCalc => {
 
     const useCalc: UseCalc = (expression: string): number => {
 
-        return calculate(expression, value => computeRotationValue(value));
+        return calculate(`calc(${expression})`, value => computeRotationValue(value));
     };
 
     return useCalc;
