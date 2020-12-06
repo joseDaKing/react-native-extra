@@ -38,17 +38,21 @@ export const useCalc: UseCalc = expression => {
 
 
 
-export const useRotationCalcFactory = (): UseCalc => {
+export type  UseRotationCalc = (expression: string) => string;
 
-    const useCalc: UseCalc = (expression: string): number => {
+export const useRotationCalcFactory = (): UseRotationCalc => {
 
-        return calculate(`calc(${expression})`, value => computeRotationValue(value));
+    const useRotationCalc: UseRotationCalc = (expression: string): string => {
+
+        const degrees = calculate(`calc(${expression})`, value => computeRotationValue(value));
+
+        return `${degrees}deg`;
     };
 
-    return useCalc;
+    return useRotationCalc;
 };
 
-export const useRotationCalc: UseCalc = expression => {
+export const useRotationCalc: UseRotationCalc = expression => {
 
     const rotationCalc = useRotationCalcFactory();
 

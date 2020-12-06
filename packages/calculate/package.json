@@ -3,8 +3,8 @@
     "access": "public"
   },
   "name": "@react-native-extra/calculate",
-  "version": "0.4.1",
-  "description": "The library makes it possible to perform a calculation with css units (the supported units are vh, vw, vmax, vmin, rem, px, cm, mm, in, pt, pc)",
+  "version": "0.4.2",
+  "description": "The library makes it possible to perform a calculation with css units (the supported units are vh, vw, vmax, vmin, rem, px, cm, mm, in, pt, pc), you can also calculate rotation units such as degrees and grads, radians and turns",
   "main": "./dest/index.js",
   "types": "./dest/index.d.ts",
   "scripts": {
