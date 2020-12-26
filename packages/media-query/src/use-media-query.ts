@@ -61,19 +61,3 @@ export const createMediaQueryHookFromString = (mediaQuery: string) => {
         return isMatching;
     };
 };
-
-
-
-export const useIsLightTheme = createMediaQueryHookFromString("(prefers-color-scheme: light)");
-
-export const useIsDarkTheme = createMediaQueryHookFromString("(prefers-color-scheme: dark)");
-
-export const useIsLandscape = createMediaQueryHookFromString("(orientation: landscape)");
-
-export const useIsPortrait = createMediaQueryHookFromString("(orientation: portrait)");
-
-export const usePrefersReducedMotion = createMediaQueryHookFromString("(prefers-reduced-motion: reduced)");
-
-export const usePrefersReducedTransparency = createMediaQueryHookFromString("(prefers-reduced-transparency: reduced)");
-
-export const useIsInvertedColors = createMediaQueryHookFromString("(inverted-colors: inverted)");

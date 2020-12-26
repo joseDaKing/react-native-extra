@@ -51,22 +51,6 @@ export function createMediaQueryComponetFromString(mediaQuery: string): React.FC
 
 
 
-export const OnLightTheme = createMediaQueryComponetFromString("(prefers-color-scheme: light)");
-
-export const OnDarkTheme = createMediaQueryComponetFromString("(prefers-color-scheme: dark)");
-
-export const OnLandscape = createMediaQueryComponetFromString("(orientation: landscape)");
-
-export const OnPortrait = createMediaQueryComponetFromString("(orientation: portrait)");
-
-export const OnPrefersReducedMotion = createMediaQueryComponetFromString("(prefers-reduced-motion: reduced)");
-
-export const OnPrefersReducedTransparency = createMediaQueryComponetFromString("(prefers-reduced-transparency: reduced)");
-
-export const OnInvertedColors = createMediaQueryComponetFromString("(inverted-colors: inverted)");
-
-
-
 type OnMediaQueryProps = {
     query: string;
 }
