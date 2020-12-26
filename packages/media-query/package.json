@@ -37,7 +37,7 @@
     "react": "^16.13.1"
   },
   "dependencies": {
-    "@react-native-extra/match-media": "^0.1.4"
+    "@react-native-extra/match-media": "^0.1.6"
   },
   "devDependencies": {
     "@types/react": "^16.14.1",
