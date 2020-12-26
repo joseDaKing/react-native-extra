@@ -64,16 +64,6 @@ export const createMediaQueryHookFromString = (mediaQuery: string) => {
 
 
 
-export const useIsIosPlatform = createMediaQueryHookFromString("(platform: ios)");
-
-export const useIsAndroidPlatform = createMediaQueryHookFromString("(platform: android)");
-
-export const useIsWindowsPlatform = createMediaQueryHookFromString("(platform: windows)");
-
-export const useIsMacosPlatform = createMediaQueryHookFromString("platform: macos");
-
-export const useIsWebPlatform = createMediaQueryHookFromString("(platform: web)");
-
 export const useIsLightTheme = createMediaQueryHookFromString("(prefers-color-scheme: light)");
 
 export const useIsDarkTheme = createMediaQueryHookFromString("(prefers-color-scheme: dark)");

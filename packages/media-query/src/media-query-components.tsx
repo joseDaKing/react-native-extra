@@ -51,16 +51,6 @@ export function createMediaQueryComponetFromString(mediaQuery: string): React.FC
 
 
 
-export const OnIosPlatform = createMediaQueryComponetFromString("(platform: ios)");
-
-export const OnAndroidPlatform = createMediaQueryComponetFromString("(platform: android)");
-
-export const OnWindowsPlatform = createMediaQueryComponetFromString("(platform: windows)");
-
-export const OnMacosPlatform = createMediaQueryComponetFromString("platform: macos");
-
-export const OnWebPlatform = createMediaQueryComponetFromString("(platform: web)");
-
 export const OnLightTheme = createMediaQueryComponetFromString("(prefers-color-scheme: light)");
 
 export const OnDarkTheme = createMediaQueryComponetFromString("(prefers-color-scheme: dark)");
