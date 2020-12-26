@@ -12,15 +12,13 @@ The library is divided in 4 parts:
 
 2. Create media query hooks and components from string
 
-3. Predefiend media query components
-
-4. Create media query hooks and components from context  
+3. Create media query hooks and components from context  
 
 
 
-### 1. useMediaQuery and OnMediaQuery
+### useMediaQuery hook and OnMediaQuery component
 ---
-Example on how to use useMediaQuery and OnMediaQuery
+Example on how to use useMediaQuery hook and OnMediaQuery component
 ```tsx
 import React from "react";
 
@@ -55,7 +53,7 @@ export const Root = () => {
 
 
 
-### 2. Create media query hooks and components from string
+### Create media query hooks and components from string
 ---
 You could also create media query components or hooks from strings
 
@@ -100,46 +98,7 @@ export const Root = () => {
 
 
 
-### 3. Predefiend media query hooks and components
----
-All imports that start with use are hooks and all import that start with On are components.
-
-```tsx
-import {
-    // Here is all predefiend hooks
-    useIsIosPlatform,
-    useIsAndroidPlatform,
-    useIsWindowsPlatform,
-    useIsMacosPlatform,
-    useIsWebPlatform,
-    useIsLightTheme,
-    useIsDarkTheme,
-    useIsLandscape,
-    useIsPortrait,
-    usePrefersReducedMotion,
-    usePrefersReducedTransparency,
-    useIsInvertedColors,
-
-    // Here is all predefiend components
-    OnIosPlatform,
-    OnAndroidPlatform,
-    OnWindowsPlatform,
-    OnMacosPlatform,
-    OnWebPlatform,
-    OnLightTheme,
-    OnDarkTheme,
-    OnLandscape,
-    OnPortrait,
-    OnPrefersReducedMotion,
-    OnPrefersReducedTransparency,
-    OnInvertedColors
-}
-from "@react-native-extra/media-query";
-```
-
-
-
-### 4. Create media query hooks and components from context
+### Create media query hooks and components from context
 ---
 You could also create media query components or hooks from a context. 
 The context must be an object. That has property named breakpoints. 
