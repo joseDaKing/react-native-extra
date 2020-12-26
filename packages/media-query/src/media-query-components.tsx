@@ -2,23 +2,21 @@ import React, { Context, useContext } from "react";
 
 import { useMediaQuery } from "./use-media-query";
 
+import { BreakpointsContextValue } from "./types";
 
 
-export type BreakpointsContextValue = {
-    breakpoints: Record<string, string>;
+
+type CreateMediaQueryComponentFromContextProps<ContextValue extends BreakpointsContextValue> = {
+    breakpoint: keyof ContextValue["breakpoints"]
 }
 
-type MediaQueryComponentFromContextProps<ContextValue extends BreakpointsContextValue> = {
-    type: keyof ContextValue["breakpoints"]
-}
-
-export function mediaQueryComponentFromContextFactory<ContextValue extends BreakpointsContextValue>(context: Context<ContextValue>): React.FC<MediaQueryComponentFromContextProps<ContextValue>> {
+export function createMediaQueryComponentFromContext<ContextValue extends BreakpointsContextValue>(context: Context<ContextValue>): React.FC<CreateMediaQueryComponentFromContextProps<ContextValue>> {
     
-    const OnBreakpoints: React.FC<MediaQueryComponentFromContextProps<ContextValue>> = ({ type, children }) => {
+    const OnBreakpoints: React.FC<CreateMediaQueryComponentFromContextProps<ContextValue>> = ({ breakpoint, children }) => {
 
         const { breakpoints } = useContext(context);
 
-        const mediaQueryString = breakpoints[type as string];
+        const mediaQueryString = breakpoints[breakpoint as string];
 
         const isMatching = useMediaQuery(mediaQueryString);
 
@@ -33,7 +31,9 @@ export function mediaQueryComponentFromContextFactory<ContextValue extends Break
     return OnBreakpoints;
 };
 
-export function mediaQueryComponetFromStringFactory(mediaQuery: string): React.FC {
+
+
+export function createMediaQueryComponetFromString(mediaQuery: string): React.FC {
     
     const OnMediaQuery: React.FC = ({ children }: any) => {
 
@@ -49,27 +49,31 @@ export function mediaQueryComponetFromStringFactory(mediaQuery: string): React.F
     return OnMediaQuery;
 };
 
-export const OnIosPlatform = mediaQueryComponetFromStringFactory("(platform: ios)");
 
-export const OnAndroidPlatform = mediaQueryComponetFromStringFactory("(platform: android)");
 
-export const OnMobilePlatform = mediaQueryComponetFromStringFactory("(platform: mobile)");
+export const OnIosPlatform = createMediaQueryComponetFromString("(platform: ios)");
 
-export const OnDesktopPlatform = mediaQueryComponetFromStringFactory("platform: desktop");
+export const OnAndroidPlatform = createMediaQueryComponetFromString("(platform: android)");
 
-export const OnWebPlatform = mediaQueryComponetFromStringFactory("(platform: web)");
+export const OnWindowsPlatform = createMediaQueryComponetFromString("(platform: windows)");
 
-export const OnLightTheme = mediaQueryComponetFromStringFactory("(prefers-color-scheme: light)");
+export const OnMacosPlatform = createMediaQueryComponetFromString("platform: macos");
 
-export const OnDarkTheme = mediaQueryComponetFromStringFactory("(prefers-color-scheme: dark)");
+export const OnWebPlatform = createMediaQueryComponetFromString("(platform: web)");
 
-export const OnLandscape = mediaQueryComponetFromStringFactory("(orientation: landscape)");
+export const OnLightTheme = createMediaQueryComponetFromString("(prefers-color-scheme: light)");
 
-export const OnPortrait = mediaQueryComponetFromStringFactory("(orientation: portrait)");
+export const OnDarkTheme = createMediaQueryComponetFromString("(prefers-color-scheme: dark)");
 
-export const OnPrefersReducedMotion = mediaQueryComponetFromStringFactory("(prefers-reduced-motion: reduced)");
+export const OnLandscape = createMediaQueryComponetFromString("(orientation: landscape)");
 
-export const OnInvertedColors = mediaQueryComponetFromStringFactory("(inverted-colors: inverted)");
+export const OnPortrait = createMediaQueryComponetFromString("(orientation: portrait)");
+
+export const OnPrefersReducedMotion = createMediaQueryComponetFromString("(prefers-reduced-motion: reduced)");
+
+export const OnPrefersReducedTransparency = createMediaQueryComponetFromString("(prefers-reduced-transparency: reduced)");
+
+export const OnInvertedColors = createMediaQueryComponetFromString("(inverted-colors: inverted)");
 
 
 
