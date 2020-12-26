@@ -71,6 +71,8 @@ export const OnPortrait = createMediaQueryComponetFromString("(orientation: port
 
 export const OnPrefersReducedMotion = createMediaQueryComponetFromString("(prefers-reduced-motion: reduced)");
 
+export const OnPrefersReducedTransparency = createMediaQueryComponetFromString("(prefers-reduced-transparency: reduced)");
+
 export const OnInvertedColors = createMediaQueryComponetFromString("(inverted-colors: inverted)");
 
 
