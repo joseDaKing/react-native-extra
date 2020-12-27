@@ -3,7 +3,7 @@
     "access": "public"
   },
   "name": "@react-native-extra/match-media",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Polyfills matchMedia method",
   "main": "./dest/index.js",
   "types": "./dest/index.d.ts",

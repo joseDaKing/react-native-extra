@@ -6,10 +6,13 @@ import {
 from "react-native"; 
 
 import { createAsyncMediaQueryMetadata, createMediaQueryResult } from "./create-media-query-result";
+import { HasMediaFeature } from "./has-media-feature";
 
 
 
 type Listener = (input: MediaQueryList) => any;
+
+
 
 export class MediaQueryList {
 
@@ -19,18 +22,30 @@ export class MediaQueryList {
 
     private listeners: Set<Listener> = new Set();
 
+    private hasMediaFeature: HasMediaFeature;
+
+    private excuteListeners = async () => {
+
+        this.matches = createMediaQueryResult(this.media, await createAsyncMediaQueryMetadata());
+
+        this.listeners.forEach(listener => listener(this))
+    }
+
     constructor(media: string) {
 
         this.media = media;
 
+        this.hasMediaFeature = new HasMediaFeature(media);
+
         this.matches = createMediaQueryResult(media);
 
-        (async () => {
-            
-            this.matches = createMediaQueryResult(media, await createAsyncMediaQueryMetadata());
-            
-            await this.excuteListeners();
-        })();
+        const onHasAsyncFeature = () => this.excuteListeners();
+
+        this.hasMediaFeature.onHasMediaFeature({
+            "inverted-colors": onHasAsyncFeature,
+            "prefers-reduced-motion": onHasAsyncFeature,
+            "prefers-reduced-transparency": onHasAsyncFeature
+        });
     }
 
     addEventListener(type: "change", listener: Listener) {   
@@ -61,34 +76,49 @@ export class MediaQueryList {
 
     private addReactNativeListeners(): void {
 
-        AccessibilityInfo.addEventListener("reduceMotionChanged", this.excuteListeners.bind(this));
+        const onHasPreferColorSchemeFeature = () => Appearance.addChangeListener(this.excuteListeners);
 
-        AccessibilityInfo.addEventListener("reduceTransparencyChanged", this.excuteListeners.bind(this));
+        const onHasPrefersReducedTransparencyFeature = () => AccessibilityInfo.addEventListener("reduceTransparencyChanged", this.excuteListeners);
 
-        AccessibilityInfo.addEventListener("invertColorsChanged", this.excuteListeners.bind(this));
+        const onHasPrefersReducedMotionFeature = () => AccessibilityInfo.addEventListener("reduceMotionChanged", this.excuteListeners);
 
-        Dimensions.addEventListener("change", this.excuteListeners.bind(this));
+        const onHasInvertedColorsFeature = () => AccessibilityInfo.addEventListener("invertColorsChanged", this.excuteListeners);;
 
-        Appearance.addChangeListener(this.excuteListeners.bind(this));
+        const onHasDimensionFeature = () => Dimensions.addEventListener("change", this.excuteListeners);
+
+        this.hasMediaFeature.onHasMediaFeature({
+            "prefers-color-scheme": onHasPreferColorSchemeFeature,
+            "prefers-reduced-transparency": onHasPrefersReducedTransparencyFeature,
+            "prefers-reduced-motion": onHasPrefersReducedMotionFeature,
+            "inverted-colors": onHasInvertedColorsFeature,
+            "aspect-ratio": onHasDimensionFeature,
+            height: onHasDimensionFeature,
+            width: onHasDimensionFeature,
+            orientation: onHasDimensionFeature,
+        });
     };
 
     private removeReactNativeListeners():void {
 
-        AccessibilityInfo.removeEventListener("reduceMotionChanged", this.excuteListeners);
+        const onHasPreferColorSchemeFeature = () => Appearance.removeChangeListener(this.excuteListeners);
 
-        AccessibilityInfo.removeEventListener("reduceTransparencyChanged", this.excuteListeners);
+        const onHasPrefersReducedTransparencyFeature = () => AccessibilityInfo.removeEventListener("reduceTransparencyChanged", this.excuteListeners);
 
-        AccessibilityInfo.removeEventListener("invertColorsChanged", this.excuteListeners);
+        const onHasPrefersReducedMotionFeature = () => AccessibilityInfo.removeEventListener("reduceMotionChanged", this.excuteListeners);
 
-        Dimensions.removeEventListener("change", this.excuteListeners);
+        const onHasInvertedColorsFeature = () => AccessibilityInfo.removeEventListener("invertColorsChanged", this.excuteListeners);;
 
-        Appearance.removeChangeListener(this.excuteListeners);
-    }
+        const onHasDimensionFeature = () => Dimensions.removeEventListener("change", this.excuteListeners);
 
-    private async excuteListeners() {
-
-        this.matches = createMediaQueryResult(this.media, await createAsyncMediaQueryMetadata());
-
-        this.listeners.forEach(listener => listener(this))
+        this.hasMediaFeature.onHasMediaFeature({
+            "prefers-color-scheme": onHasPreferColorSchemeFeature,
+            "prefers-reduced-transparency": onHasPrefersReducedTransparencyFeature,
+            "prefers-reduced-motion": onHasPrefersReducedMotionFeature,
+            "inverted-colors": onHasInvertedColorsFeature,
+            "aspect-ratio": onHasDimensionFeature,
+            height: onHasDimensionFeature,
+            width: onHasDimensionFeature,
+            orientation: onHasDimensionFeature,
+        });
     }
 }
