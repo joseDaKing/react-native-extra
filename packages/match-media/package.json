@@ -38,7 +38,8 @@
     "react-native": "^0.63.3"
   },
   "dependencies": {
-    "css-mediaquery": "^0.1.2"
+    "css-mediaquery": "^0.1.2",
+    "match-media": "^0.2.0"
   },
   "devDependencies": {
     "@types/css-mediaquery": "^0.1.0",
