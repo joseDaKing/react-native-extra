@@ -1,1 +1,1 @@
-export * from "./media-query-list"
+import "./polyfill";

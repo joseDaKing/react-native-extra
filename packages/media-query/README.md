@@ -1,9 +1,12 @@
+<div id="media-query"></div>
+
 # Media query
 
 This library contains media query hooks and media query components that can ease the development of responsive design in react native and react.
 
----
+<br>
 
+---
 ## Sections
 
 The library is divided in 4 parts:
@@ -14,7 +17,7 @@ The library is divided in 4 parts:
 
 3. Create media query hooks and components from context  
 
-
+<br>
 
 ### useMediaQuery hook and OnMediaQuery component
 ---
@@ -51,7 +54,7 @@ export const Root = () => {
 };
 ```
 
-
+<br>
 
 ### Create media query hooks and components from string
 ---
@@ -96,7 +99,7 @@ export const Root = () => {
 };
 ```
 
-
+<br>
 
 ### Create media query hooks and components from context
 ---
